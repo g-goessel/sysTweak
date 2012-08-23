@@ -37,7 +37,7 @@
 	    <CheckBox android:layout_below="@id/chkGTTS" android:id="@+id/chkMovieStudio" android:visibility="gone"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Movie_Studio" />
 	    
-	    <CheckBox android:layout_below="@id/chkMovieStudio" android:id="@+id/chkGmail" android:visibility="gone"
+	    <CheckBox android:layout_below="@id/chkMovieStudio" android:id="@+id/chkGmail" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gmail" />
 	    
 	    <CheckBox android:layout_below="@id/chkGmail" android:id="@+id/chkTvOut" android:visibility="visible"

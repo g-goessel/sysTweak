@@ -101,9 +101,16 @@ public class MainActivity extends Activity {
 	         }
 	         if(chkGmail.isChecked()){
 	        	 //enable Gmail
+	        	 args[3] = "enable";
+	        	 args[4] = "com.google.android.gm";
 	         }else{
 	        	 //disable GMail
+	        	 args[3] = "disable";
+	        	 args[4] = "com.google.android.gm";
 	         }
+	         cmd = new ProcessBuilder(args);
+	         process = cmd.start();
+	         
 	         if(chkSetOnBoot.isChecked()){
 	        	 //enable applying of settings on boot
 	         }else{
