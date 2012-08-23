@@ -1,0 +1,53 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/lblNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:text="@string/hello_world"
+        tools:context=".MainActivity" />
+<ScrollView 
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/scrMain"
+    android:layout_below="@id/lblNote">
+    <RelativeLayout 
+        android:id="@+id/lyContents"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+	    <CheckBox
+		    android:id="@+id/chkRomManager"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="@string/RomManager" />
+	    <CheckBox android:layout_below="@id/chkRomManager" android:id="@+id/chkLiveWallpapers" 
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/LiveWallpapers" />
+	    
+	    <CheckBox android:layout_below="@id/chkLiveWallpapers" android:id="@+id/chkCMWallpapers" android:visibility="visible"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/CMWallpapers" />
+	    
+	    <CheckBox android:layout_below="@id/chkCMWallpapers" android:id="@+id/chkGTTS" android:visibility="visible"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/GoogleTextToSpeech" />
+	    
+	    <CheckBox android:layout_below="@id/chkGTTS" android:id="@+id/chkMovieStudio" android:visibility="gone"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Movie_Studio" />
+	    
+	    <CheckBox android:layout_below="@id/chkMovieStudio" android:id="@+id/chkGmail" android:visibility="gone"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gmail" />
+	    
+	    <CheckBox android:layout_below="@id/chkGmail" android:id="@+id/chkTvOut" android:visibility="visible"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/TVOut" />
+	        
+	    <CheckBox android:layout_below="@id/chkTvOut" android:id="@+id/chkBoot" android:visibility="gone"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/boot" />
+	 
+	    <Button android:layout_below="@id/chkBoot" android:id="@+id/btnSetOnBoot"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" />
+	</RelativeLayout>
+</ScrollView>
+</RelativeLayout>
