@@ -43,10 +43,7 @@
 	    <CheckBox android:layout_below="@id/chkGmail" android:id="@+id/chkTvOut" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/TVOut" />
 	        
-	    <CheckBox android:layout_below="@id/chkTvOut" android:id="@+id/chkBoot" android:visibility="gone"
-	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/boot" />
-	 
-	    <Button android:layout_below="@id/chkBoot" android:id="@+id/btnSetOnBoot"
+	    <Button android:layout_below="@id/chkTvOut" android:id="@+id/btnSetOnBoot"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" />
 	</RelativeLayout>
 </ScrollView>

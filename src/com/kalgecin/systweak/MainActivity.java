@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
          CheckBox chkMovie 			= (CheckBox) findViewById(R.id.chkMovieStudio);
          CheckBox chkGmail 			= (CheckBox) findViewById(R.id.chkGmail);
          CheckBox chkTvOut			= (CheckBox) findViewById(R.id.chkTvOut);
-         CheckBox chkSetOnBoot 		= (CheckBox) findViewById(R.id.chkBoot);
          ProcessBuilder cmd;
          Process process;
          try{
@@ -111,11 +110,6 @@ public class MainActivity extends Activity {
 	         cmd = new ProcessBuilder(args);
 	         process = cmd.start();
 	         
-	         if(chkSetOnBoot.isChecked()){
-	        	 //enable applying of settings on boot
-	         }else{
-	        	 //disable applying of settings on boot
-	         }
          }catch(IOException e){}
     }
     @Override
