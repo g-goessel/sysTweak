@@ -5,6 +5,7 @@ import java.io.IOException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,19 +25,17 @@ public class MainActivity extends Activity {
 	String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
 						"com.google.android.tts","com.movie","com.google.android.gm","com.teamhacksung.tvout"};
 	CheckBox[] CBchecks = {chkRomManager,chkLiveWallpapers,chkCMWallpapers,chkGTTS,chkMovie,chkGmail,chkTvOut};
+	int[] CBchecksID = {R.id.chkRomManager,R.id.chkLiveWallpapers,R.id.chkCMWallpapers,R.id.chkGTTS,R.id.chkMovieStudio,R.id.chkGmail,R.id.chkTvOut};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button btnSet 		= (Button) findViewById(R.id.btnSetOnBoot);
-        chkRomManager 		= (CheckBox) findViewById(R.id.chkRomManager);
-        chkLiveWallpapers 	= (CheckBox) findViewById(R.id.chkLiveWallpapers);
-        chkCMWallpapers 	= (CheckBox) findViewById(R.id.chkCMWallpapers);
-        chkGTTS 			= (CheckBox) findViewById(R.id.chkGTTS);
-        chkMovie 			= (CheckBox) findViewById(R.id.chkMovieStudio);
-        chkGmail 			= (CheckBox) findViewById(R.id.chkGmail);
-        chkTvOut			= (CheckBox) findViewById(R.id.chkTvOut);
+        
+        for(int i=0;i<checks.length;i++){
+        	CBchecks[i] = (CheckBox) findViewById(CBchecksID[i]);
+        }
         
         dataSrc = new settingsDB(this);
         dataSrc.open();
@@ -51,7 +50,16 @@ public class MainActivity extends Activity {
     }
     public void loadChecks(){
     	for(int i=0;i<checks.length;i++){
-    		CBchecks[i].setChecked(Boolean.getBoolean(dataSrc.getSetting(checks[i])));
+    		Boolean b;
+    		if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
+    			b=true;
+    			Log.i("loadChecks","IT'S TRUE");
+    		}else{
+    			b=false;
+    			Log.i("loadChecks","false alarm");
+    		}
+    		Log.i(this.getPackageName(), checks[i]+","+i+","+Boolean.toString(b));
+    		CBchecks[i].setChecked(b);
     	}
     	
     }
@@ -59,6 +67,7 @@ public class MainActivity extends Activity {
     	 
          ProcessBuilder cmd;
          Process process;
+         //Enable or disable services/apps
          try{
         	 String[] args = {"su","-c","pm","enable",""};
         	 for(int i=0;i<checks.length;i++){
@@ -72,6 +81,10 @@ public class MainActivity extends Activity {
             	 process = cmd.start();
         	 }
          }catch(IOException e){}
+         //Save current state of checks to DB
+         for(int i=0;i<checks.length;i++){
+        	 dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
+         }
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
