@@ -20,4 +20,8 @@
 	<string name="TVOut">TVOut</string>
 	<string name="boot">Set on Boot</string>
 	<string name="apply">Apply Settings</string>
+	<string name="about_graphics">Graphics thanks to: </string>
+	<string name="about_translations">Translations thanks to:</string>
+	<string name="about_about">About:</string>
+	<string name="about_translations_thanks">French - Minidou-77</string>
 </resources>

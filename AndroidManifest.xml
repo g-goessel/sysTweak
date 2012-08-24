@@ -20,6 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".menu_settings" android:label="@string/menu_settings"></activity>
+        <activity android:name=".menu_about" android:label="@string/menu_about"></activity>
     </application>
 
 </manifest>

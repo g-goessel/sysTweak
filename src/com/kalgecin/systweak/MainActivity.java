@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -93,6 +95,7 @@ public class MainActivity extends Activity {
 	         cmd = new ProcessBuilder(args);
 	         process = cmd.start();
 	         
+	         //TODO: implement movie editor
 	         if(chkMovie.isChecked()){
 	        	 //enable Movie Editor
 	         }else{
@@ -116,5 +119,21 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	switch(item.getItemId()){
+	    	case R.id.menu_settings:
+	    		Intent intent_settings = new Intent(getApplicationContext(),menu_settings.class);
+	    		startActivity(intent_settings);
+	    		return true;
+	    	case R.id.menu_about:
+	    		Intent intent_about = new Intent(getApplicationContext(),menu_about.class);
+	    		startActivity(intent_about);
+	    		return true;
+	    	default:
+	    		return super.onOptionsItemSelected(item);
+    		
+    	}
     }
 }

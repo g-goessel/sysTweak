@@ -2,22 +2,22 @@
 
     <string name="app_name">SysTweak</string>
     <string name="hello_world">Attention:\n
-        Les Réglages suivants sont concu pour le \n
+        Les RÃ©glages suivants sont concu pour le \n
         galaxy s2 i9100 dans sa version internationale\n
-        Cela peut ou ne pas fonctionner sur d'autres appareils.</string>
-    <string name="menu_settings">Réglages</string>
+        Cela peut ou ne pas fonctionner sur d\'autres appareils.</string>
+    <string name="menu_settings">RÃ©glages</string>
     <string name="menu_about">A Propos</string>
     <string name="title_activity_main">System Tweaks</string>
 	<string name="RomManager">Rom Manager</string>
-	<string name="LiveWallpapers">Fonds d'écran Animés</string>
-	<string name="CMWallpapers">Fonds d'écran CyanogenMod</string>
+	<string name="LiveWallpapers">Fonds d\'Ã©cran AnimÃ©s</string>
+	<string name="CMWallpapers">Fonds d\'Ã©cran CyanogenMod</string>
 	<string name="GoogleTextToSpeech">Moteur de Transcription Vocale Google</string>
 	<string name="Movie_Studio">Movie Studio</string>
 	<string name="gmail">Gmail</string>
-	<string name="phone">Téléphone</string>
+	<string name="phone">TÃ©lÃ©phone</string>
 	<string name="apollo">Apollo</string>
 	<string name="DSPManager">DSPManager</string>
 	<string name="TVOut">TVOut</string>
-	<string name="boot">Appliquer au Démarrage</string>
-	<string name="apply">Appliquer les Réglages</string>
+	<string name="boot">Appliquer au DÃ©marrage</string>
+	<string name="apply">Appliquer les RÃ©glages</string>
 </resources>

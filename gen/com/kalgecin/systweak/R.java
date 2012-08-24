@@ -31,8 +31,9 @@ public final class R {
         public static final int scrMain=0x7f070001;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
-        public static final int settings=0x7f030001;
+        public static final int about=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int settings=0x7f030002;
     }
     public static final class menu {
         public static final int activity_main=0x7f060000;
@@ -45,6 +46,10 @@ public final class R {
         public static final int Movie_Studio=0x7f040009;
         public static final int RomManager=0x7f040005;
         public static final int TVOut=0x7f04000e;
+        public static final int about_about=0x7f040013;
+        public static final int about_graphics=0x7f040011;
+        public static final int about_translations=0x7f040012;
+        public static final int about_translations_thanks=0x7f040014;
         public static final int apollo=0x7f04000c;
         public static final int app_name=0x7f040000;
         public static final int apply=0x7f040010;
