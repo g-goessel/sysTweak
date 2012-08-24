@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">SysTweak</string>
+    <string name="hello_world">Nota:\n
+        Estas definições são criadas para \n
+        a versão internacional do Galaxy S2 i9100\n
+        Poderá ou não ser compatível com outros modelos.</string>
+    <string name="menu_settings">Definições</string>
+    <string name="menu_about">Acerca</string>
+    <string name="title_activity_main">Ajustes de Sistema</string>
+	<string name="RomManager">Rom Manager</string>
+	<string name="LiveWallpapers">Imagens de Fundo Activas</string>
+	<string name="CMWallpapers">CyanogenMod Wallpapers</string>
+	<string name="GoogleTextToSpeech">Mecanismo de Síntese de Voz do Google</string>
+	<string name="Movie_Studio">Estúdio de Filmes</string>
+	<string name="gmail">Gmail</string>
+	<string name="phone">Telefone</string>
+	<string name="apollo">Apollo</string>
+	<string name="DSPManager">DSPManager</string>
+	<string name="TVOut">TVOut</string>
+	<string name="boot">Definir ao Iniciar</string>
+	<string name="apply">Aplicar Configurações</string>
+</resources>
