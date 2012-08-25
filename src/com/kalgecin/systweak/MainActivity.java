@@ -15,23 +15,24 @@ import android.widget.Switch;
 public class MainActivity extends Activity {
 	private settingsDB dataSrc;
 	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
-	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch;
+	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
 	
 	String[] checks = {"swRomManager","swLiveWallpapers","swCMWallpapers","swGTTS","swMovie","swGmail","swTvOut","swPhone",
-						"swApollo","swDSPManager","swEmail","swNewsAndWeather","swGTalk","swTerminalEmulator","swTorch"};
+						"swApollo","swDSPManager","swEmail","swNewsAndWeather","swGTalk","swTerminalEmulator","swTorch",
+						"swMediaScanner"};
 	
 	String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
 						"com.google.android.tts","com.android.videoeditor","com.google.android.gm","com.teamhacksung.tvout",
 						"com.android.phone","com.andrew.apollo","com.bel.android.dspmanager","com.android.email",
 						"com.google.android.apps.genie.geniewidget","com.google.android.talk","jackpal.androidterm",
-						"net.cactii.flash2"};
+						"net.cactii.flash2","com.android.providers.media/com.android.providers.media.MediaScannerReceiver"};
 	
 	Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
-						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch};
+						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner};
 	
 	int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
-						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch};
+						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {

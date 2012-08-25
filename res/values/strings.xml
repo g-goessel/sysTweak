@@ -25,6 +25,7 @@
 	<string name="google_talk">Google talk</string>
 	<string name="terminal_emulator">Terminal emulator</string>
 	<string name="torch">Torch</string>
+	<string name="media_scanner">Media Scanner</string>
 	<!-- Not yet added -->
 	<!-- end -->
 	<string name="boot">Set on Boot</string>

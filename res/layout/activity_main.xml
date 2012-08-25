@@ -60,8 +60,9 @@
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/terminal_emulator" />
 	    <Switch android:layout_below="@id/swTerminalEmulator" android:id="@+id/swTorch" android:visibility="visible"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/torch" />
-	    
-	    <Button android:layout_below="@id/swTorch" android:id="@+id/btnSetOnBoot"
+	    <Switch android:layout_below="@+id/swTorch" android:id="@+id/swMediaScanner" android:visibility="visible"
+	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/media_scanner" />
+	    <Button android:layout_below="@id/swMediaScanner" android:id="@+id/btnSetOnBoot"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" />
 	</RelativeLayout>
 </ScrollView>
