@@ -14,18 +14,18 @@
 	<string name="LiveWallpapers">Live Wallpapers</string>
 	<string name="CMWallpapers">CyanogenMod Wallpapers</string>
 	<string name="GoogleTextToSpeech">Google Text-to-speak-engine</string>
-	<string name="Movie_Studio">Movie Studio</string>
 	<string name="gmail">Gmail</string>
+	<string name="TVOut">TVOut</string>
 	<string name="phone">Phone</string>
 	<string name="apollo">Apollo</string>
 	<string name="DSPManager">DSPManager</string>
-	<string name="TVOut">TVOut</string>
 	<string name="email">Email</string>
-	<string name="movie_studio">Movie studio</string>
 	<string name="news_and_weather">News and weather</string>
+	<string name="Movie_Studio">Video Editor</string>
 	<string name="google_talk">Google talk</string>
 	<string name="terminal_emulator">Terminal emulator</string>
 	<string name="torch">Torch</string>
+	<!-- Not yet added -->
 	<!-- end -->
 	<string name="boot">Set on Boot</string>
 	<string name="apply">Apply Settings</string>

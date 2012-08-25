@@ -11,7 +11,7 @@ public class dbHelped extends SQLiteOpenHelper{
 	public static String dbColSetting = "setting";
 	public static String dbColValue = "value";
 	public static String dbIdCol = "_id";
-	public static int dbVersion = 1;
+	public static int dbVersion = 2;
 	public dbHelped(Context context) {
 		super(context, dbName, null, dbVersion);
 	}
@@ -23,7 +23,7 @@ public class dbHelped extends SQLiteOpenHelper{
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 		Log.w(dbHelped.class.getName(), "upgrading from "+oldVersion+" to "+newVersion);
-		db.execSQL("DROP TABLE IF EXIST "+dbSettingsName);
+		db.execSQL("DROP TABLE IF EXISTS "+dbSettingsName);
 		onCreate(db);
 	}
 }

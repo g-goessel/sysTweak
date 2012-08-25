@@ -10,23 +10,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Switch;
 
 public class MainActivity extends Activity {
 	private settingsDB dataSrc;
-	Switch chkRomManager;
-	Switch chkLiveWallpapers;
-	Switch chkCMWallpapers;
-	Switch chkGTTS;
-	Switch chkMovie;
-	Switch chkGmail;
-	Switch chkTvOut;
-	String[] checks = {"chkRomManager","chkLiveWallpapers","chkCMWallpapers","chkGTTS","chkMovie","chkGmail","chkTvOut"};
+	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
+	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch;
+	
+	String[] checks = {"swRomManager","swLiveWallpapers","swCMWallpapers","swGTTS","swMovie","swGmail","swTvOut","swPhone",
+						"swApollo","swDSPManager","swEmail","swNewsAndWeather","swGTalk","swTerminalEmulator","swTorch"};
+	
 	String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
-						"com.google.android.tts","com.movie","com.google.android.gm","com.teamhacksung.tvout"};
-	Switch[] CBchecks = {chkRomManager,chkLiveWallpapers,chkCMWallpapers,chkGTTS,chkMovie,chkGmail,chkTvOut};
-	int[] CBchecksID = {R.id.chkRomManager,R.id.chkLiveWallpapers,R.id.chkCMWallpapers,R.id.chkGTTS,R.id.chkMovieStudio,R.id.chkGmail,R.id.chkTvOut};
+						"com.google.android.tts","com.android.videoeditor","com.google.android.gm","com.teamhacksung.tvout",
+						"com.android.phone","com.andrew.apollo","com.bel.android.dspmanager","com.android.email",
+						"com.google.android.apps.genie.geniewidget","com.google.android.talk","jackpal.androidterm",
+						"net.cactii.flash2"};
+	
+	Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
+						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch};
+	
+	int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
+						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
+						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch};
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
