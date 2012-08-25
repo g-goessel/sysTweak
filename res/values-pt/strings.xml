@@ -5,19 +5,35 @@
         Estas definições são criadas para \n
         a versão internacional do Galaxy S2 i9100\n
         Poderá ou não ser compatível com outros modelos.</string>
+        Selecione os serviços que pretende ativar: \n</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_about">Acerca</string>
     <string name="title_activity_main">System Tweaks</string>
-	<string name="RomManager">Rom Manager</string>
+        <!-- Things to toggle -->
+        <string name="RomManager">Rom Manager</string>
 	<string name="LiveWallpapers">Imagens de Fundo Activas</string>
 	<string name="CMWallpapers">CyanogenMod Wallpapers</string>
 	<string name="GoogleTextToSpeech">Mecanismo de Síntese de Voz do Google</string>
-	<string name="Movie_Studio">Estúdio de Filmes</string>
 	<string name="gmail">Gmail</string>
+	<string name="TVOut">TVOut</string>
 	<string name="phone">Telefone</string>
 	<string name="apollo">Apollo</string>
 	<string name="DSPManager">DSPManager</string>
-	<string name="TVOut">TVOut</string>
+	<string name="email">Email</string>
+	<string name="news_and_weather">Notícias e tempo</string>
+	<string name="Movie_Studio">Estúdio de filmes</string>
+	<string name="google_talk">Google Talk</string>
+	<string name="terminal_emulator">Terminal Emulator</string>
+	<string name="torch">Tocha</string>
+	<!-- Not yet added -->
+	<!-- end -->
 	<string name="boot">Definir ao Iniciar</string>
 	<string name="apply">Aplicar Configurações</string>
+	<string name="about_graphics">Grafismo agradecido a: </string>
+	<string name="about_translations">Traduções agradecidas a:</string>
+	<string name="about_about">Acerca:</string>
+	<string name="about_translations_thanks">\n
+	    French - Minidou-77\n
+	    Português - Ghelfalath\n
+	    Arabic - Kadhim7</string>
 </resources>
