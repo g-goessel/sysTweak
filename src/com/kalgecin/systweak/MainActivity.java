@@ -79,9 +79,9 @@ public class MainActivity extends Activity {
         	 for(int i=0;i<checks.length;i++){
         		 args[4] = CHKnames[i];
         		 if(CBchecks[i].isChecked()){
-        			 args[3] = "enabled";
+        			 args[3] = "enable";
         		 }else{
-        			 args[3] = "disabled";
+        			 args[3] = "disable";
         		 }
         		 Log.i("Toggle_service",args[4]+":"+args[3]);
         		 cmd = new ProcessBuilder(args);
