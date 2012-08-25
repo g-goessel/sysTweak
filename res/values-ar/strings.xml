@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">SysTweak</string>
+	<string name="hello_world">اهلا يا عالم:\n
+	هذا البرنامج صمم ليعمل على \n
+	جهاز سامسونج جالكسي اس2 النسحة العالميه \n
+	 وقد لا يعمل على الاجهزة الاخرى </string>
+	<string name="menu_settings">Settings</string>
+	<string name="menu_about">عن</string>
+	<string name="title_activity_main">System Tweaks</string>
+	<string name="RomManager">مدير الروم</string>
+	<string name="LiveWallpapers">خلفيات حيه</string>
+	<string name="CMWallpapers">خلفيات سينجنمود</string>
+	<string name="GoogleTextToSpeech">اداة جوجل للمحادثه</string>
+	<string name="Movie_Studio">استيديو الافلام</string>
+	<string name="gmail">جوجل جي ميل</string>
+	<string name="phone">الهاتف</string>
+	<string name="apollo">ابولو</string>
+	<string name="DSPManager">DSPManager</string>
+	<string name="TVOut">مخرج التلفاز</string>
+	<string name="boot">ابدأ مع بدأ التشغيل</string>
+	<string name="apply">تطبيق الاعدادات</string>
+	<string name="about_graphics">الشكر لمصمم الديزاين: </string>
+	<string name="about_translations">الشكر للمترجمين:</string>
+	<string name="about_about">عن:</string>
+</resources>
