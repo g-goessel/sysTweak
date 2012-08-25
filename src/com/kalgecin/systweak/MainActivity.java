@@ -11,20 +11,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.Switch;
 
 public class MainActivity extends Activity {
 	private settingsDB dataSrc;
-	CheckBox chkRomManager;
-	CheckBox chkLiveWallpapers;
-	CheckBox chkCMWallpapers;
-	CheckBox chkGTTS;
-	CheckBox chkMovie;
-	CheckBox chkGmail;
-	CheckBox chkTvOut;
+	Switch chkRomManager;
+	Switch chkLiveWallpapers;
+	Switch chkCMWallpapers;
+	Switch chkGTTS;
+	Switch chkMovie;
+	Switch chkGmail;
+	Switch chkTvOut;
 	String[] checks = {"chkRomManager","chkLiveWallpapers","chkCMWallpapers","chkGTTS","chkMovie","chkGmail","chkTvOut"};
 	String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
 						"com.google.android.tts","com.movie","com.google.android.gm","com.teamhacksung.tvout"};
-	CheckBox[] CBchecks = {chkRomManager,chkLiveWallpapers,chkCMWallpapers,chkGTTS,chkMovie,chkGmail,chkTvOut};
+	Switch[] CBchecks = {chkRomManager,chkLiveWallpapers,chkCMWallpapers,chkGTTS,chkMovie,chkGmail,chkTvOut};
 	int[] CBchecksID = {R.id.chkRomManager,R.id.chkLiveWallpapers,R.id.chkCMWallpapers,R.id.chkGTTS,R.id.chkMovieStudio,R.id.chkGmail,R.id.chkTvOut};
 	
     @Override
@@ -34,7 +35,7 @@ public class MainActivity extends Activity {
         Button btnSet 		= (Button) findViewById(R.id.btnSetOnBoot);
         
         for(int i=0;i<checks.length;i++){
-        	CBchecks[i] = (CheckBox) findViewById(CBchecksID[i]);
+        	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
         }
         
         dataSrc = new settingsDB(this);
@@ -77,6 +78,7 @@ public class MainActivity extends Activity {
         		 }else{
         			 args[3] = "disabled";
         		 }
+        		 Log.i("Toggle_service",args[4]+":"+args[3]);
         		 cmd = new ProcessBuilder(args);
             	 process = cmd.start();
         	 }

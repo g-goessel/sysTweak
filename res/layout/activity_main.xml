@@ -20,27 +20,28 @@
         android:id="@+id/lyContents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-	    <CheckBox
+        
+	    <Switch
 		    android:id="@+id/chkRomManager"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:text="@string/RomManager" />
-	    <CheckBox android:layout_below="@id/chkRomManager" android:id="@+id/chkLiveWallpapers" 
+	    <Switch android:layout_below="@id/chkRomManager" android:id="@+id/chkLiveWallpapers" 
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/LiveWallpapers" />
 	    
-	    <CheckBox android:layout_below="@id/chkLiveWallpapers" android:id="@+id/chkCMWallpapers" android:visibility="visible"
+	    <Switch android:layout_below="@id/chkLiveWallpapers" android:id="@+id/chkCMWallpapers" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/CMWallpapers" />
 	    
-	    <CheckBox android:layout_below="@id/chkCMWallpapers" android:id="@+id/chkGTTS" android:visibility="visible"
+	    <Switch android:layout_below="@id/chkCMWallpapers" android:id="@+id/chkGTTS" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/GoogleTextToSpeech" />
 	    
-	    <CheckBox android:layout_below="@id/chkGTTS" android:id="@+id/chkMovieStudio" android:visibility="gone"
+	    <Switch android:layout_below="@id/chkGTTS" android:id="@+id/chkMovieStudio" android:visibility="gone"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Movie_Studio" />
 	    
-	    <CheckBox android:layout_below="@id/chkMovieStudio" android:id="@+id/chkGmail" android:visibility="visible"
+	    <Switch android:layout_below="@id/chkMovieStudio" android:id="@+id/chkGmail" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/gmail" />
 	    
-	    <CheckBox android:layout_below="@id/chkGmail" android:id="@+id/chkTvOut" android:visibility="visible"
+	    <Switch android:layout_below="@id/chkGmail" android:id="@+id/chkTvOut" android:visibility="visible"
 	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/TVOut" />
 	        
 	    <Button android:layout_below="@id/chkTvOut" android:id="@+id/btnSetOnBoot"
