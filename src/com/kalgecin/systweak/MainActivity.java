@@ -17,11 +17,11 @@ public class MainActivity extends Activity {
 	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
 	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
 	
-	String[] checks = {"swRomManager","swLiveWallpapers","swCMWallpapers","swGTTS","swMovie","swGmail","swTvOut","swPhone",
+	public static String[] checks = {"swRomManager","swLiveWallpapers","swCMWallpapers","swGTTS","swMovie","swGmail","swTvOut","swPhone",
 						"swApollo","swDSPManager","swEmail","swNewsAndWeather","swGTalk","swTerminalEmulator","swTorch",
 						"swMediaScanner"};
 	
-	String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
+	public static String[] CHKnames = {"com.koushikdutta.rommanager","com.android.wallpaper.livepicker","com.cyanogenmod.CMWallpapers",
 						"com.google.android.tts","com.android.videoeditor","com.google.android.gm","com.teamhacksung.tvout",
 						"com.android.phone","com.andrew.apollo","com.bel.android.dspmanager","com.android.email",
 						"com.google.android.apps.genie.geniewidget","com.google.android.talk","jackpal.androidterm",
@@ -88,7 +88,9 @@ public class MainActivity extends Activity {
         		 cmd = new ProcessBuilder(args);
             	 process = cmd.start();
         	 }
-         }catch(IOException e){}
+         }catch(IOException e){
+        	 e.printStackTrace();
+         }
          //Save current state of checks to DB
          for(int i=0;i<checks.length;i++){
         	 dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
