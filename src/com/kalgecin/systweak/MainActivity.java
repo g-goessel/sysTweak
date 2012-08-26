@@ -100,7 +100,7 @@ public class MainActivity extends Activity {
         	 Log.i("sysTweak_file_path",filePath);
         	 
         	 //new ProcessBuilder(new String[] {"su","-c","chmod","775",filePath}).start();
-        	 new ProcessBuilder(new String[] {"su","-c","/sbin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
+        	 new ProcessBuilder(new String[] {"su","-c","/system/bin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
         	 
         	 fs.close();
          }catch(IOException e){

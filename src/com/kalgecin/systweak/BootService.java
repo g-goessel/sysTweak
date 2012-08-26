@@ -46,7 +46,7 @@ public class BootService extends Service{
 		Log.i(LOGTAG,"opened DB");
 		if(dataSrc.getSetting("on_boot").equalsIgnoreCase("true")){
 				//run disabler
-			 ProcessBuilder cmd;
+			 //ProcessBuilder cmd;
 	         //Process process;
 	         //Enable or disable services/apps
 			 String fileContents = "#!/system/bin/sh\n";
@@ -69,7 +69,7 @@ public class BootService extends Service{
 				FileOutputStream fs = openFileOutput("toexec.sh", MODE_PRIVATE);
 	        	fs.write(fileContents.getBytes());
 	        	String filePath = "/data/data/"+this.getPackageName()+"/files/toexec.sh";
-	        	new ProcessBuilder(new String[] {"su","-c","/sbin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
+	        	new ProcessBuilder(new String[] {"su","-c","/system/bin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
 	        	 
 	        	fs.close();
 	         }catch(IOException e){
