@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="app_name">SysTweak</string>
+
+  <string name="hello_world">Attenzione:\n Queste impostazioni sono per la \n
+  versione internazionale del galaxy s2 i9100\n Questo significa che molto
+  probabilmente non funzionerà su altri modelli.\n Attivate il servizio che vi
+  interessa: \n</string>
+
+  <string name="menu_settings">Impostazioni</string>
+
+  <string name="menu_about">A Proposito</string>
+
+  <string name="title_activity_main">Tweak di Sistema</string>
+
+  <!-- Things to toggle -->
+
+  <string name="RomManager">Rom Manager</string>
+
+  <string name="LiveWallpapers">Sfondi Animati</string>
+
+  <string name="CMWallpapers">Sfondi della CyanogenMod</string>
+
+  <string name="GoogleTextToSpeech">Google Text-to-speak-engine</string>
+
+  <string name="gmail">Gmail</string>
+
+  <string name="TVOut">TVOut</string>
+
+  <string name="phone">Telefono</string>
+
+  <string name="apollo">Apollo</string>
+
+  <string name="DSPManager">DSPManager</string>
+
+  <string name="email">Email</string>
+
+  <string name="news_and_weather">Meteo e News</string>
+
+  <string name="Movie_Studio">Video Editor</string>
+
+  <string name="google_talk">Google talk</string>
+
+  <string name="terminal_emulator">emulatore Terminale</string>
+
+  <string name="torch">Torcia</string>
+
+  <string name="media_scanner">Media Scanner</string>
+
+  <!-- Not yet added -->
+
+  <!-- end -->
+
+  <string name="boot">Applica All\'Avvio</string>
+
+  <string name="apply">Applica Impostazioni</string>
+
+  <string name="about_graphics">Ringraziamenti per la Grafica: </string>
+
+  <string name="about_translations">Ringraziamenti per le Traduzioni:</string>
+
+  <string name="about_about">A Proposito:</string>
+
+  <string name="about_translations_thanks">\n French - Minidou-77\n Português
+  - Ghelfalath\n Arabic - Kadhim7</string>
+</resources>
