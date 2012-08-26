@@ -57,6 +57,7 @@ public final class R {
         /**  Things to toggle 
  Things to toggle 
  Things to toggle 
+ Things to toggle 
          */
         public static final int RomManager=0x7f040005;
         public static final int TVOut=0x7f04000a;
@@ -68,6 +69,8 @@ public final class R {
         public static final int app_name=0x7f040000;
         public static final int apply=0x7f040016;
         /**  Not yet added 
+ end 
+ Not yet added 
  end 
  Not yet added 
  end 

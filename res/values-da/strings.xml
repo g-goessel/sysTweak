@@ -1,0 +1,42 @@
+<resources>
+
+    <string name="app_name">SysTweak</string>
+    <string name="hello_world">Tag ved øje:\n
+        Disse indstillinger er designet til Samsung \n
+        Galaxy S2 i9100, den internationale version.\n
+        Måske - måske ikke, virker den på andre mobiler.\n
+        Slå ønskede funktioner til: \n</string>
+    <string name="menu_settings">Indstillinger</string>
+    <string name="menu_about">Om</string>
+    <string name="title_activity_main">System Tweaks</string>
+    <!-- Things to toggle -->
+	<string name="RomManager">Rom Administration</string>
+	<string name="LiveWallpapers">Live Baggrunde</string>
+	<string name="CMWallpapers">CyanogenMod Baggrunde</string>
+	<string name="GoogleTextToSpeech">Google Tekst-til-tale funktion</string>
+	<string name="gmail">Gmail</string>
+	<string name="TVOut">TVud</string>
+	<string name="phone">Mobil</string>
+	<string name="apollo">Apollo</string>
+	<string name="DSPManager">DSPAdministration</string>
+	<string name="email">Email</string>
+	<string name="news_and_weather">Nyheder og Vejr</string>
+	<string name="Movie_Studio">Video Redigerer</string>
+	<string name="google_talk">Google Tale</string>
+	<string name="terminal_emulator">KommandoPrompt</string>
+	<string name="torch">Lommelygte</string>
+	<string name="media_scanner">Medie Scanner</string>
+	<!-- Not yet added -->
+	<!-- end -->
+	<string name="boot">Sæt til Opstart</string>
+	<string name="apply">Anvend Indstillinger</string>
+	<string name="about_graphics">Design, Tak til: </string>
+	<string name="about_translations">Oversættelser, Tak til:</string>
+	<string name="about_about">Om:</string>
+	<string name="about_translations_thanks">\n
+	    French - Minidou-77\n
+	    Português - Ghelfalath\n
+	    Arabic - Kadhim7\n
+	    Italian - ginlik1996\n
+		Danish - JosseX\n</string>
+</resources>
