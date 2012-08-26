@@ -1,5 +1,6 @@
 package com.kalgecin.systweak;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import android.os.Bundle;
@@ -72,9 +73,11 @@ public class MainActivity extends Activity {
     }
     public void SetChecks(){
     	 
-         ProcessBuilder cmd;
-         Process process;
+         //ProcessBuilder cmd;
+         //@SuppressWarnings("unused")
+		 //Process process;
          //Enable or disable services/apps
+         String fileContents = "#!/system/bin/sh\n";
          try{
         	 String[] args = {"su","-c","pm","enable",""};
         	 for(int i=0;i<checks.length;i++){
@@ -85,9 +88,21 @@ public class MainActivity extends Activity {
         			 args[3] = "disable";
         		 }
         		 Log.i("Toggle_service",args[4]+":"+args[3]);
-        		 cmd = new ProcessBuilder(args);
-            	 process = cmd.start();
+        		 fileContents+=args[2]+" "+args[3]+" "+args[4]+";\n";
+        		 //cmd = new ProcessBuilder(args);
+        		 //TODO: execute all commands in one go using shell file
+            	 //process = cmd.start();
         	 }
+        	 Log.i("sysTweak_file",fileContents);
+        	 FileOutputStream fs = openFileOutput("toexec.sh", MODE_PRIVATE);
+        	 fs.write(fileContents.getBytes());
+        	 String filePath = "/data/data/"+this.getPackageName()+"/files/toexec.sh";
+        	 Log.i("sysTweak_file_path",filePath);
+        	 
+        	 //new ProcessBuilder(new String[] {"su","-c","chmod","775",filePath}).start();
+        	 new ProcessBuilder(new String[] {"su","-c","/sbin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
+        	 
+        	 fs.close();
          }catch(IOException e){
         	 e.printStackTrace();
          }

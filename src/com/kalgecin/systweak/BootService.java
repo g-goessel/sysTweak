@@ -1,5 +1,6 @@
 package com.kalgecin.systweak;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -10,15 +11,17 @@ import android.os.IBinder;
 import android.util.Log;
 
 public class BootService extends Service{
-	private final long mDelay = 0;
-	private final long mPeriod = 5000;
+	//private final long mDelay = 0;
+	//private final long mPeriod = 5000;
 	private final String LOGTAG = "SysTweakBoot";
+	@SuppressWarnings("unused")
 	private Timer mTimer;
 	private class LogTask extends TimerTask {
 		public void run(){
 			Log.i(LOGTAG,"scheduled run");
 		}
 	}
+	@SuppressWarnings("unused")
 	private LogTask mLogTask;
 	
 	@Override
@@ -36,7 +39,7 @@ public class BootService extends Service{
 	
 	@Override
 	public void onStart(final Intent intent, final int startId){
-		super.onStart(intent, startId);
+		//super.onStart(intent, startId);
 		Log.i(LOGTAG,"started");
 		settingsDB dataSrc = new settingsDB(this);
 		dataSrc.open();
@@ -44,8 +47,9 @@ public class BootService extends Service{
 		if(dataSrc.getSetting("on_boot").equalsIgnoreCase("true")){
 				//run disabler
 			 ProcessBuilder cmd;
-	         Process process;
+	         //Process process;
 	         //Enable or disable services/apps
+			 String fileContents = "#!/system/bin/sh\n";
 	         try{
 	        	String[] args = {"su","-c","pm","enable",""};
 	        	String[] checks = MainActivity.checks;
@@ -58,9 +62,16 @@ public class BootService extends Service{
 	        			 args[3] = "disable";
 	        		 }
 	        		 Log.i("sysTweak_BOOT",args[4]+":"+args[3]);
-	        		 cmd = new ProcessBuilder(args);
-	            	 process = cmd.start();
+	        		 fileContents+=args[2]+" "+args[3]+" "+args[4]+";\n";
+	        		 //cmd = new ProcessBuilder(args);
+	            	 //cmd.start();
 				}
+				FileOutputStream fs = openFileOutput("toexec.sh", MODE_PRIVATE);
+	        	fs.write(fileContents.getBytes());
+	        	String filePath = "/data/data/"+this.getPackageName()+"/files/toexec.sh";
+	        	new ProcessBuilder(new String[] {"su","-c","/sbin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
+	        	 
+	        	fs.close();
 	         }catch(IOException e){
 	        	 e.printStackTrace();
 	         }
