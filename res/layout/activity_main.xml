@@ -39,14 +39,17 @@
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/Movie_Studio" />
 	    
 	    <Switch android:layout_below="@id/swMovieStudio" android:id="@+id/swGmail" android:visibility="visible"
+	        	android:checked="true"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/gmail" />
 	    
 	    <Switch android:layout_below="@id/swGmail" android:id="@+id/swTvOut" android:visibility="visible"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/TVOut" />
 	    <Switch android:layout_below="@id/swTvOut" android:id="@+id/swPhone" android:visibility="visible"
+	        	android:checked="true"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/phone" />
 	    
 	    <Switch android:layout_below="@id/swPhone" android:id="@+id/swApollo" android:visibility="visible"
+	        	android:checked="true"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/apollo" />
 	    <Switch android:layout_below="@id/swApollo" android:id="@+id/swDSPManager" android:visibility="visible"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/DSPManager" />
@@ -55,15 +58,20 @@
 	    <Switch android:layout_below="@id/swEmail" android:id="@+id/swNewsAndWeather" android:visibility="visible"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/news_and_weather" />
 	    <Switch android:layout_below="@id/swNewsAndWeather" android:id="@+id/swGTalk" android:visibility="visible"
-	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/google_talk" />
+	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/google_talk" 
+	        	android:checked="true"/>
 	    <Switch android:layout_below="@id/swGTalk" android:id="@+id/swTerminalEmulator" android:visibility="visible"
-	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/terminal_emulator" />
+	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/terminal_emulator"
+	        	android:checked="true" />
 	    <Switch android:layout_below="@id/swTerminalEmulator" android:id="@+id/swTorch" android:visibility="visible"
-	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/torch" />
+	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/torch" 
+	        	android:checked="true"/>
 	    <Switch android:layout_below="@+id/swTorch" android:id="@+id/swMediaScanner" android:visibility="visible"
-	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/media_scanner" />
+	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/media_scanner" 
+	        	android:checked="true"/>
 	    <Button android:layout_below="@id/swMediaScanner" android:id="@+id/btnSetOnBoot"
-	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" />
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" 
+	        	android:checked="true" />
 	</RelativeLayout>
 </ScrollView>
 </RelativeLayout>
