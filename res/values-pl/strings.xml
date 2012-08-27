@@ -1,0 +1,43 @@
+<resources>
+
+    <string name="app_name">SysTweak</string>
+    <string name="hello_world">Uwaga:\n
+        Te ustawienia są dedykowane \n
+	dla telefonu Samsung Galaxy S2\n
+        i9100 w wersja "nie brandowanej"\n
+	I mogą nie działać na innych urządzeniach.\n
+        Włącz usługi, które chcesz uruchomić: \n</string>
+    <string name="menu_settings">Ustawienia</string>
+    <string name="menu_about">O programie</string>
+    <string name="title_activity_main">Ustawienia systemu</string>
+    <!-- Things to toggle -->
+<string name="RomManager">Rom Manadżer</string>
+<string name="LiveWallpapers">Ruchome tapety</string>
+<string name="CMWallpapers">Tapety CyanogenMod</string>
+<string name="GoogleTextToSpeech">Google Text To Speech</string>
+<string name="gmail">Gmail</string>
+<string name="TVOut">Wyjście TV</string>
+<string name="phone">Telefon</string>
+<string name="apollo">Apollo</string>
+<string name="DSPManager">Menadżer DSP</string>
+<string name="email">Poczta e-mail</string>
+<string name="news_and_weather">Nowości i pogoda</string>
+<string name="Movie_Studio">Edytor Wideo</string>
+<string name="google_talk">Google talk</string>
+<string name="terminal_emulator">Emulator terminala</string>
+<string name="torch">Latarka</string>
+<string name="media_scanner">Skaner mediów</string>
+<!-- Not yet added -->
+<!-- end -->
+<string name="boot">Ustaw przy uruchamianiu</string>
+<string name="apply">Zatwierdź ustawienia</string>
+<string name="about_graphics">Podziękowania za grafikę: </string>
+<string name="about_translations">Podziękowania za tłumaczenie:</string>
+<string name="about_about">O programie:</string>
+<string name="about_translations_thanks">\n
+French - Minidou-77\n
+Português - Ghelfalath\n
+Arabic - Kadhim7\n
+Italian - ginlik1996\n
+Danish - JosseX\n</string>
+</resources>
