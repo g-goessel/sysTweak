@@ -124,28 +124,37 @@ public class MainActivity extends Activity {
 	         //Enable or disable services/apps
         	 String[] args = {"su","-c","pm","enable",""};
         	 String comm = "";
-        	 BufferedOutputStream bw = new BufferedOutputStream(process.getOutputStream());
+        	 OutputStream bw = process.getOutputStream();
         	 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
         	 for(int i=0;i<checks.length;i++){
         		 args[4] = CHKnames[i];
         		 if(CBchecks[i].isChecked()){
-        			 comm = "pm enable "+args[4]+";";
+        			 if(!check_status(args[4])){
+        				 comm = "pm enable "+args[4]+";";
+            			 Log.i("Toggle_service","enabling "+args[4]);
+        			 }else{
+        				 Log.i("Toggle_service",args[4]+" is already enabled");
+        			 }
         		 }else{
-        			 comm = "pm disable "+args[4]+";";
+        			 if(check_status(args[4])){
+	        			 comm = "pm disable "+args[4]+";";
+	        			 Log.i("Toggle_service","disabling "+args[4]);
+        			 }else{
+        				 Log.i("Toggle_service",args[4]+" is already disabled");
+        			 }
         		 }
         		 Log.i("Toggle_service",comm);
-        		 
+        		 //bw = process.getOutputStream();
         		 bw.write(comm.getBytes());
-        		 bw.flush();
+        		 //bw.close();
         		 //Log.i("Toggle_service","res: "+br.readLine());
         	 }
-        	 br.close();
         	 bw.close();
+        	 br.close();
         	 process.waitFor();
          }catch(IOException e){
         	 e.printStackTrace();
          } catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
          //Save current state of checks to DB
