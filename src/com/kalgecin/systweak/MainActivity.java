@@ -1,5 +1,6 @@
 package com.kalgecin.systweak;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
@@ -112,39 +113,41 @@ public class MainActivity extends Activity {
     }
     public void SetChecks(){
     	 
-         //ProcessBuilder cmd;
+         ProcessBuilder cmd;
          //@SuppressWarnings("unused")
-		 //Process process;
-         //Enable or disable services/apps
-         String fileContents = "#!/system/bin/sh\n";
-         try{
+    	Process process;
+		 try {
+			//process = Runtime.getRuntime().exec("su");
+			 cmd = new ProcessBuilder("su");
+			process = cmd.start();
+			cmd.redirectErrorStream();
+	         //Enable or disable services/apps
         	 String[] args = {"su","-c","pm","enable",""};
+        	 String comm = "";
+        	 BufferedOutputStream bw = new BufferedOutputStream(process.getOutputStream());
+        	 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
         	 for(int i=0;i<checks.length;i++){
         		 args[4] = CHKnames[i];
         		 if(CBchecks[i].isChecked()){
-        			 args[3] = "enable";
+        			 comm = "pm enable "+args[4]+";";
         		 }else{
-        			 args[3] = "disable";
+        			 comm = "pm disable "+args[4]+";";
         		 }
-        		 Log.i("Toggle_service",args[4]+":"+args[3]);
-        		 fileContents+=args[2]+" "+args[3]+" "+args[4]+";\n";
-        		 //cmd = new ProcessBuilder(args);
-        		 //TODO: execute all commands in one go using shell file
-            	 //process = cmd.start();
+        		 Log.i("Toggle_service",comm);
+        		 
+        		 bw.write(comm.getBytes());
+        		 bw.flush();
+        		 //Log.i("Toggle_service","res: "+br.readLine());
         	 }
-        	 Log.i("sysTweak_file",fileContents);
-        	 FileOutputStream fs = openFileOutput("toexec.sh", MODE_PRIVATE);
-        	 fs.write(fileContents.getBytes());
-        	 String filePath = "/data/data/"+this.getPackageName()+"/files/toexec.sh";
-        	 Log.i("sysTweak_file_path",filePath);
-        	 
-        	 //new ProcessBuilder(new String[] {"su","-c","chmod","775",filePath}).start();
-        	 new ProcessBuilder(new String[] {"su","-c","/system/bin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
-        	 
-        	 fs.close();
+        	 br.close();
+        	 bw.close();
+        	 process.waitFor();
          }catch(IOException e){
         	 e.printStackTrace();
-         }
+         } catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
          //Save current state of checks to DB
          for(int i=0;i<checks.length;i++){
         	 dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
