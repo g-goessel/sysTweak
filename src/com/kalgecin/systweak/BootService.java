@@ -1,7 +1,10 @@
 package com.kalgecin.systweak;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,36 +48,40 @@ public class BootService extends Service{
 		dataSrc.open();
 		Log.i(LOGTAG,"opened DB");
 		if(dataSrc.getSetting("on_boot").equalsIgnoreCase("true")){
-				//run disabler
-			 //ProcessBuilder cmd;
-	         //Process process;
-	         //Enable or disable services/apps
-			 String fileContents = "#!/system/bin/sh\n";
+			ProcessBuilder cmd;
+			Process process;
+			
 	         try{
+	        	cmd = new ProcessBuilder("su");
+		   		process = cmd.start();
+		   		cmd.redirectErrorStream();
 	        	String[] args = {"su","-c","pm","enable",""};
 	        	String[] checks = MainActivity.checks;
 	        	String[] CHKnames = MainActivity.CHKnames;
+	        	String comm = "";
+	           	BufferedOutputStream bw = new BufferedOutputStream(process.getOutputStream());
+	           	BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 				for(int i=0;i<checks.length;i++){
 					args[4] = CHKnames[i];
 	        		 if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){//CBchecks[i].isChecked()){
-	        			 args[3] = "enable";
+	        			 comm = "pm enable "+args[4]+";";
 	        		 }else{
-	        			 args[3] = "disable";
+	        			 comm = "pm disable "+args[4]+";";
 	        		 }
 	        		 Log.i("sysTweak_BOOT",args[4]+":"+args[3]);
-	        		 fileContents+=args[2]+" "+args[3]+" "+args[4]+";\n";
-	        		 //cmd = new ProcessBuilder(args);
-	            	 //cmd.start();
+	        		 bw.write(comm.getBytes());
+	           		 bw.flush();
+	           		 
 				}
-				FileOutputStream fs = openFileOutput("toexec.sh", MODE_PRIVATE);
-	        	fs.write(fileContents.getBytes());
-	        	String filePath = "/data/data/"+this.getPackageName()+"/files/toexec.sh";
-	        	new ProcessBuilder(new String[] {"su","-c","/system/bin/sh",filePath," > /data/data/"+this.getPackageName()+"/files/status.log 2>&1"}).start();
-	        	 
-	        	fs.close();
+				br.close();
+	           	bw.close();
+	           	process.waitFor();
 	         }catch(IOException e){
 	        	 e.printStackTrace();
-	         }
+	         } catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}else{
 			Log.i("sysTweak_BOOT","on_boot is disabled");
 		}
