@@ -1,7 +1,15 @@
 package com.kalgecin.systweak;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+
+import javax.xml.transform.stream.StreamResult;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -48,13 +56,44 @@ public class MainActivity extends Activity {
         dataSrc = new settingsDB(this);
         dataSrc.open();
         loadChecks();
-        
         btnSet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				SetChecks();
 			}
 		});
+    }
+    public boolean check_status(String package_name){
+    	Log.i("sysTweak_check_status","Entered");
+    	Process process;
+    	try {
+			process =Runtime.getRuntime().exec("su");
+			OutputStream bw = process.getOutputStream();
+			bw.write(new String("pm list packages -e "+package_name).getBytes());
+			bw.close();
+			String result = "";
+			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			Log.i("sysTweak_check_status","reading");
+			result=br.readLine();
+			Log.i("sysTweak_check_status","res: "+result);
+			br.close();
+			bw.close();
+			int res = process.waitFor();
+			Log.i("sysTweak_check_status","Exit status: "+res);
+			if(result != null && result.contains(package_name)){
+				Log.i("sysTweak_check_status",package_name+" is enabled");
+				return true;
+			}else{
+				Log.i("sysTweak_check_status",package_name+" is disabled");
+				return false;
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	Log.i("sysTweak_check_status","Exited");
+    	return false;
     }
     public void loadChecks(){
     	for(int i=0;i<checks.length;i++){
