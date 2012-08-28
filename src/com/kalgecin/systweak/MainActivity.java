@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +18,12 @@ import android.widget.Switch;
 
 public class MainActivity extends Activity {
 	private settingsDB dataSrc;
+	ProgressDialog progressBar;
+	private int progressBarStatus = 0;
+	private static int cnt;
+	private static boolean bnt;
+	private Handler progressBarHandler = new Handler();
+	
 	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
 	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
 	
@@ -31,7 +39,8 @@ public class MainActivity extends Activity {
 	
 	Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
 						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner};
-	
+	Boolean[] CBStatuses = {false,false,false,false,false,true,false,true,true,
+							false,false,false,true,true,true,true};
 	int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
 						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
@@ -42,13 +51,48 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         Button btnSet 		= (Button) findViewById(R.id.btnSetOnBoot);
         
-        for(int i=0;i<checks.length;i++){
-        	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
-        }
         
         dataSrc = new settingsDB(this);
         dataSrc.open();
-        loadChecks();
+        progressBar = new ProgressDialog(this);
+    	progressBar.setCancelable(false);
+    	progressBar.setMessage("Initializing....");
+    	progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+    	progressBar.setProgress(0);
+    	progressBar.setMax(checks.length);
+    	progressBar.show();
+    	progressBarStatus = 0;
+    	new Thread(new Runnable() {
+			@Override
+			public void run() {
+				loadChecks();
+			}
+		}).start();
+		new Thread(new Runnable() {
+		    		
+			@Override
+			public void run() {
+				Log.i("sysTweaks_loadChecks","Entering thread");
+				while(progressBarStatus < checks.length){
+					Log.i("sysTweaks_loadChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
+					try {
+						Thread.sleep(200);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					//progressBar.setProgress(progressBarStatus);
+					progressBarHandler.post(new Runnable() {
+						@Override
+						public void run() {
+							progressBar.setProgress(progressBarStatus);
+						}
+					});
+				}
+				if(progressBarStatus>=checks.length){
+					progressBar.dismiss();
+				}
+			}
+		}).start();
         btnSet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -58,7 +102,7 @@ public class MainActivity extends Activity {
     }
     public static boolean check_exists(String package_name){
     	String fTag = "sysTweak_checkExists";
-    	if(package_name.equalsIgnoreCase(CHKnames[5])){
+    	if(package_name.equalsIgnoreCase(CHKnames[15])){
     		Log.i(fTag,"skipping media scanner");
     		return true;
     	}
@@ -118,8 +162,13 @@ public class MainActivity extends Activity {
     	return false;
     }
     public void loadChecks(){
-    	String tag = "sysTweaks_loadChecks";
     	for(int i=0;i<checks.length;i++){
+        	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
+        }
+    	String tag = "sysTweaks_loadChecks";
+		for(int i=0;i<checks.length;i++){
+			progressBarStatus = i+1;
+			
     		Boolean b;
     		if(check_exists(CHKnames[i])){
     			CBchecks[i].setEnabled(true);
@@ -131,15 +180,23 @@ public class MainActivity extends Activity {
         			b=false;
         			Log.i(tag,"off");
         		}
-        		Log.i(this.getPackageName(), checks[i]+","+i+","+Boolean.toString(b));
-        		CBchecks[i].setChecked(b);
+        		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
+        		cnt=i;
+        		bnt=b;
+        		runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						CBchecks[cnt].setChecked(bnt);
+					}
+				});
+        		//CBchecks[i].setChecked(b);
+        		CBStatuses[i]=b;
     		}else{
     			CBchecks[i].setEnabled(false);
     			Log.i(tag,"disabled "+checks[i]);
     		}
     		
     	}
-    	
     }
     public void SetChecks(){
     	 String fTag = "sysTweak_setChecks";
