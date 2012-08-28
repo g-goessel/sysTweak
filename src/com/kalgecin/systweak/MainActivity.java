@@ -56,6 +56,35 @@ public class MainActivity extends Activity {
 			}
 		});
     }
+    public static boolean check_exists(String package_name){
+    	String fTag = "sysTweak_checkExists";
+    	if(package_name.equalsIgnoreCase(CHKnames[5])){
+    		Log.i(fTag,"skipping media scanner");
+    		return true;
+    	}
+    	Log.i(fTag,"Entered");
+    	Process process;
+    	try{
+    		process = Runtime.getRuntime().exec("pm list packages "+package_name);
+    		BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+    		String result = br.readLine();
+    		br.close();
+    		int res = process.waitFor();
+    		Log.i(fTag,"Exit status: "+res);
+    		if(result != null && result.contains(package_name)){
+    			Log.i(fTag,package_name+" is installed");
+    			return true;
+    		}else{
+    			Log.i(fTag,package_name+" is not installed");
+    			return false;
+    		}
+    	}catch(IOException e){
+    		e.printStackTrace();
+    	} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+    	return false;
+    }
     public static boolean check_status(String package_name){
     	Log.i("sysTweak_check_status","Entered");
     	Process process;
@@ -89,17 +118,26 @@ public class MainActivity extends Activity {
     	return false;
     }
     public void loadChecks(){
+    	String tag = "sysTweaks_loadChecks";
     	for(int i=0;i<checks.length;i++){
     		Boolean b;
-    		if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
-    			b=true;
-    			Log.i("loadChecks","IT'S TRUE");
+    		if(check_exists(CHKnames[i])){
+    			CBchecks[i].setEnabled(true);
+    			Log.i(tag,"enabled "+checks[i]);
+    			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
+        			b=true;
+        			Log.i(tag,"on");
+        		}else{
+        			b=false;
+        			Log.i(tag,"off");
+        		}
+        		Log.i(this.getPackageName(), checks[i]+","+i+","+Boolean.toString(b));
+        		CBchecks[i].setChecked(b);
     		}else{
-    			b=false;
-    			Log.i("loadChecks","false alarm");
+    			CBchecks[i].setEnabled(false);
+    			Log.i(tag,"disabled "+checks[i]);
     		}
-    		Log.i(this.getPackageName(), checks[i]+","+i+","+Boolean.toString(b));
-    		CBchecks[i].setChecked(b);
+    		
     	}
     	
     }
