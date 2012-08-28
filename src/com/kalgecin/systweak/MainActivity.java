@@ -22,6 +22,7 @@ public class MainActivity extends Activity {
 	private int progressBarStatus = 0;
 	private static int cnt;
 	private static boolean bnt;
+	private static String str="";
 	private Handler progressBarHandler = new Handler();
 	
 	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
@@ -56,7 +57,7 @@ public class MainActivity extends Activity {
         dataSrc.open();
         progressBar = new ProgressDialog(this);
     	progressBar.setCancelable(false);
-    	progressBar.setMessage("Initializing....");
+    	progressBar.setTitle("Initializing....");
     	progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     	progressBar.setProgress(0);
     	progressBar.setMax(checks.length);
@@ -85,18 +86,55 @@ public class MainActivity extends Activity {
 						@Override
 						public void run() {
 							progressBar.setProgress(progressBarStatus);
+							progressBar.setMessage(str);
 						}
 					});
 				}
 				if(progressBarStatus>=checks.length){
 					progressBar.dismiss();
+					progressBarStatus=0;
 				}
 			}
 		}).start();
         btnSet.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SetChecks();
+				progressBar.setProgress(0);
+				progressBar.setTitle("Setting....");
+				progressBar.show();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						Log.i("sysTweaks_setChecks","Entering thread");
+						while(progressBarStatus < checks.length){
+							Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
+							try {
+								Thread.sleep(200);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							//progressBar.setProgress(progressBarStatus);
+							progressBarHandler.post(new Runnable() {
+								@Override
+								public void run() {
+									progressBar.setProgress(progressBarStatus);
+									progressBar.setMessage(str);
+								}
+							});
+						}
+						if(progressBarStatus>=checks.length){
+							progressBar.dismiss();
+							progressBarStatus=0;
+						}
+					}
+				}).start();
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						SetChecks();
+					}
+				}).start();
+				
 			}
 		});
     }
@@ -187,6 +225,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void run() {
 						CBchecks[cnt].setChecked(bnt);
+						str=CBchecks[cnt].getText().toString();
 					}
 				});
         		//CBchecks[i].setChecked(b);
@@ -214,7 +253,15 @@ public class MainActivity extends Activity {
         	 OutputStream bw = process.getOutputStream();
         	 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
         	 for(int i=0;i<checks.length;i++){
+        		 progressBarStatus = i+1;
         		 args[4] = CHKnames[i];
+        		 cnt=i;
+        		 runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						str=CBchecks[cnt].getText().toString();
+					}
+				});
         		 if(CBchecks[i].isChecked()){
         			 if(!check_status(args[4])){
         				 comm = "pm enable "+args[4]+";";
