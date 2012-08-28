@@ -2,7 +2,6 @@ package com.kalgecin.systweak;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Timer;
