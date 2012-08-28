@@ -43,10 +43,11 @@ public class BootService extends Service{
 	@Override
 	public void onStart(final Intent intent, final int startId){
 		//super.onStart(intent, startId);
-		Log.i(LOGTAG,"started");
+		String fTag = "sysTweak_onBoot";
+		Log.i(fTag,"started");
 		settingsDB dataSrc = new settingsDB(this);
 		dataSrc.open();
-		Log.i(LOGTAG,"opened DB");
+		Log.i(fTag,"opened DB");
 		if(dataSrc.getSetting("on_boot").equalsIgnoreCase("true")){
 			ProcessBuilder cmd;
 			Process process;
@@ -64,11 +65,21 @@ public class BootService extends Service{
 				for(int i=0;i<checks.length;i++){
 					args[4] = CHKnames[i];
 	        		 if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){//CBchecks[i].isChecked()){
-	        			 comm = "pm enable "+args[4]+";";
+	        			 if(!MainActivity.check_status(args[4])){
+	        				 comm = "pm enable "+args[4]+";";
+	            			 Log.i(fTag,"enabling "+args[4]);
+	        			 }else{
+	        				 Log.i(fTag,args[4]+" is already enabled");
+	        			 }
 	        		 }else{
-	        			 comm = "pm disable "+args[4]+";";
+	        			 if(MainActivity.check_status(args[4])){
+		        			 comm = "pm disable "+args[4]+";";
+		        			 Log.i(fTag,"disabling "+args[4]);
+	        			 }else{
+	        				 Log.i(fTag,args[4]+" is already disabled");
+	        			 }
 	        		 }
-	        		 Log.i("sysTweak_BOOT",args[4]+":"+args[3]);
+	        		 Log.i(fTag,args[4]+":"+args[3]);
 	        		 bw.write(comm.getBytes());
 	           		 bw.flush();
 	           		 
@@ -83,7 +94,7 @@ public class BootService extends Service{
 				e.printStackTrace();
 			}
 		}else{
-			Log.i("sysTweak_BOOT","on_boot is disabled");
+			Log.i(fTag,"on_boot is disabled");
 		}
 		//mTimer.schedule(mLogTask, mDelay, mPeriod);
 	}

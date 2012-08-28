@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
 			}
 		});
     }
-    public boolean check_status(String package_name){
+    public static boolean check_status(String package_name){
     	Log.i("sysTweak_check_status","Entered");
     	Process process;
     	try {
@@ -112,7 +112,7 @@ public class MainActivity extends Activity {
     	
     }
     public void SetChecks(){
-    	 
+    	 String fTag = "sysTweak_setChecks";
          ProcessBuilder cmd;
          //@SuppressWarnings("unused")
     	Process process;
@@ -131,19 +131,19 @@ public class MainActivity extends Activity {
         		 if(CBchecks[i].isChecked()){
         			 if(!check_status(args[4])){
         				 comm = "pm enable "+args[4]+";";
-            			 Log.i("Toggle_service","enabling "+args[4]);
+            			 Log.i(fTag,"enabling "+args[4]);
         			 }else{
-        				 Log.i("Toggle_service",args[4]+" is already enabled");
+        				 Log.i(fTag,args[4]+" is already enabled");
         			 }
         		 }else{
         			 if(check_status(args[4])){
 	        			 comm = "pm disable "+args[4]+";";
-	        			 Log.i("Toggle_service","disabling "+args[4]);
+	        			 Log.i(fTag,"disabling "+args[4]);
         			 }else{
-        				 Log.i("Toggle_service",args[4]+" is already disabled");
+        				 Log.i(fTag,args[4]+" is already disabled");
         			 }
         		 }
-        		 Log.i("Toggle_service",comm);
+        		 Log.i(fTag,comm);
         		 //bw = process.getOutputStream();
         		 bw.write(comm.getBytes());
         		 //bw.close();
