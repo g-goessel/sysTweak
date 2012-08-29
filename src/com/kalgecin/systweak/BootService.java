@@ -64,14 +64,14 @@ public class BootService extends Service{
 				for(int i=0;i<checks.length;i++){
 					args[4] = CHKnames[i];
 	        		 if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){//CBchecks[i].isChecked()){
-	        			 if(!MainActivity.check_status(args[4])){
+	        			 if(!MainActivity.check_status(new String[] {args[4]})[0]){
 	        				 comm = "pm enable "+args[4]+";";
 	            			 Log.i(fTag,"enabling "+args[4]);
 	        			 }else{
 	        				 Log.i(fTag,args[4]+" is already enabled");
 	        			 }
 	        		 }else{
-	        			 if(MainActivity.check_status(args[4])){
+	        			 if(MainActivity.check_status(new String[] {args[4]})[0]){
 		        			 comm = "pm disable "+args[4]+";";
 		        			 Log.i(fTag,"disabling "+args[4]);
 	        			 }else{

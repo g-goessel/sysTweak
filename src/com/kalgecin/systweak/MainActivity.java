@@ -169,37 +169,38 @@ public class MainActivity extends Activity {
 		}
     	return btr;
     }
-    public static boolean check_status(String package_name){
+    public static boolean[] check_status(String[] package_name){
     	Log.i("sysTweak_check_status","Entered");
+    	boolean[] btr = new boolean[package_name.length];
+    	
     	Process process;
     	try {
-			process =Runtime.getRuntime().exec("su");
-			OutputStream bw = process.getOutputStream();
-			bw.write(new String("pm list packages -e "+package_name).getBytes());
-			bw.close();
+			process =Runtime.getRuntime().exec("pm list packages -e");
 			String result = "";
 			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			Log.i("sysTweak_check_status","reading");
-			result=br.readLine();
-			Log.i("sysTweak_check_status","res: "+result);
+			while((result=br.readLine())!=null){
+				for(int i=0;i<package_name.length;i++){
+					if(result.contains(package_name[i])){
+						btr[i]=true;
+					}
+				}
+			}
+			for(int i=0;i<package_name.length;i++){
+				if(btr[i]!=true){
+					btr[i]=false;
+				}
+			}
 			br.close();
-			bw.close();
 			int res = process.waitFor();
 			Log.i("sysTweak_check_status","Exit status: "+res);
-			if(result != null && result.contains(package_name)){
-				Log.i("sysTweak_check_status",package_name+" is enabled");
-				return true;
-			}else{
-				Log.i("sysTweak_check_status",package_name+" is disabled");
-				return false;
-			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
     	Log.i("sysTweak_check_status","Exited");
-    	return false;
+    	return btr;
     }
     public void loadChecks(){
     	for(int i=0;i<checks.length;i++){
@@ -267,14 +268,14 @@ public class MainActivity extends Activity {
 					}
 				});
         		 if(CBchecks[i].isChecked()){
-        			 if(!check_status(args[4])){
+        			 if(!check_status(new String[] {args[4]})[0]){
         				 comm = "pm enable "+args[4]+";";
             			 Log.i(fTag,"enabling "+args[4]);
         			 }else{
         				 Log.i(fTag,args[4]+" is already enabled");
         			 }
         		 }else{
-        			 if(check_status(args[4])){
+        			 if(check_status(new String[] {args[4]})[0]){
 	        			 comm = "pm disable "+args[4]+";";
 	        			 Log.i(fTag,"disabling "+args[4]);
         			 }else{
