@@ -273,6 +273,7 @@ public class MainActivity extends Activity {
             			 Log.i(fTag,"enabling "+args[4]);
         			 }else{
         				 Log.i(fTag,args[4]+" is already enabled");
+        				 continue;
         			 }
         		 }else{
         			 if(check_status(new String[] {args[4]})[0]){
@@ -280,6 +281,7 @@ public class MainActivity extends Activity {
 	        			 Log.i(fTag,"disabling "+args[4]);
         			 }else{
         				 Log.i(fTag,args[4]+" is already disabled");
+        				 continue;
         			 }
         		 }
         		 Log.i(fTag,comm);
