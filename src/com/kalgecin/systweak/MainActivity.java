@@ -58,6 +58,7 @@ public class MainActivity extends Activity {
         progressBar = new ProgressDialog(this);
     	progressBar.setCancelable(false);
     	progressBar.setTitle("Initializing....");
+    	progressBar.setMessage("");
     	progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
     	progressBar.setProgress(0);
     	progressBar.setMax(checks.length);
@@ -75,7 +76,7 @@ public class MainActivity extends Activity {
 			public void run() {
 				Log.i("sysTweaks_loadChecks","Entering thread");
 				while(progressBarStatus < checks.length){
-					Log.i("sysTweaks_loadChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
+					//Log.i("sysTweaks_loadChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
 					try {
 						Thread.sleep(200);
 					} catch (InterruptedException e) {
@@ -87,6 +88,7 @@ public class MainActivity extends Activity {
 						public void run() {
 							progressBar.setProgress(progressBarStatus);
 							progressBar.setMessage(str);
+							//Log.i("sysTweaks_loadChecks",str);
 						}
 					});
 				}
@@ -101,13 +103,14 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				progressBar.setProgress(0);
 				progressBar.setTitle("Setting....");
+				progressBar.setMessage("");
 				progressBar.show();
 				new Thread(new Runnable() {
 					@Override
 					public void run() {
 						Log.i("sysTweaks_setChecks","Entering thread");
 						while(progressBarStatus < checks.length){
-							Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
+							//Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
 							try {
 								Thread.sleep(200);
 							} catch (InterruptedException e) {
