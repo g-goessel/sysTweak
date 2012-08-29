@@ -141,34 +141,33 @@ public class MainActivity extends Activity {
 			}
 		});
     }
-    public static boolean check_exists(String package_name){
+    public static boolean[] check_exists(String[] package_name){
     	String fTag = "sysTweak_checkExists";
-    	if(package_name.equalsIgnoreCase(CHKnames[15])){
-    		Log.i(fTag,"skipping media scanner");
-    		return true;
-    	}
+    	boolean[] btr = new boolean[package_name.length];
     	Log.i(fTag,"Entered");
     	Process process;
-    	try{
-    		process = Runtime.getRuntime().exec("pm list packages "+package_name);
-    		BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    		String result = br.readLine();
-    		br.close();
-    		int res = process.waitFor();
-    		Log.i(fTag,"Exit status: "+res);
-    		if(result != null && result.contains(package_name)){
-    			Log.i(fTag,package_name+" is installed");
-    			return true;
-    		}else{
-    			Log.i(fTag,package_name+" is not installed");
-    			return false;
-    		}
-    	}catch(IOException e){
-    		e.printStackTrace();
-    	} catch (InterruptedException e) {
+    	try {
+			process = Runtime.getRuntime().exec("pm list packages");
+		
+	    	BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+	    	String brstr = "";
+	    	while((brstr = br.readLine())!=null){
+	    		for(int i=0;i<package_name.length;i++){
+	    			if(brstr.contains(package_name[i])){
+	    				btr[i]=true;
+	    			}
+	    		}
+	    	}
+	    	for(int i=0;i<package_name.length;i++){
+	    		if(btr[i]!=true){
+	    			btr[i]=false;
+	    		}
+	    	}
+	    	btr[15]=true; //Media Scanner
+    	} catch (IOException e) {
 			e.printStackTrace();
 		}
-    	return false;
+    	return btr;
     }
     public static boolean check_status(String package_name){
     	Log.i("sysTweak_check_status","Entered");
@@ -207,11 +206,13 @@ public class MainActivity extends Activity {
         	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
         }
     	String tag = "sysTweaks_loadChecks";
+    	boolean[] btr = check_exists(CHKnames);
+    	
 		for(int i=0;i<checks.length;i++){
 			progressBarStatus = i+1;
 			
     		Boolean b;
-    		if(check_exists(CHKnames[i])){
+    		if(btr[i]){
     			CBchecks[i].setEnabled(true);
     			Log.i(tag,"enabled "+checks[i]);
     			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
