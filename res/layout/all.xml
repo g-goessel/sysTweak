@@ -6,7 +6,8 @@
     android:orientation="vertical">
     
 	<TextView android:layout_height="wrap_content" android:layout_width="wrap_content" android:text="@string/all_apps"/>
-	
+	<Button android:id="@+id/btnAllApply" android:layout_height="wrap_content" android:layout_width="wrap_content"
+	    android:text="@string/apply"/>
 	<ScrollView
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content">

@@ -1,9 +1,7 @@
 package com.kalgecin.systweak;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -21,7 +19,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +27,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 public class MainActivity extends FragmentActivity {
@@ -423,35 +419,35 @@ public class MainActivity extends FragmentActivity {
 						allSwitches.add(new Switch(getActivity()));
 						allSwitches.get(i).setText(allNames.get(i));
 						allSwitches.get(i).setChecked(allEnabled.get(i));
+						rlAll.removeView(allSwitches.get(i));
 						rlAll.addView(allSwitches.get(i));
         			}
+        			Button btnSet = (Button) rlMain.findViewById(R.id.btnAllApply);
+        			btnSet.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							allPackages = getAllPackages();
+							int i=0;
+							for(Switch swCur : allSwitches){
+								if(swCur.isChecked() && !allEnabled.get(i)){
+									SwitchManager.toggleState(allPackages.get(i), true);
+								}else if(!swCur.isChecked() && allEnabled.get(i)){
+									SwitchManager.toggleState(allPackages.get(i), false);
+								}
+								i++;
+							}
+						}
+					});
         			return rlMain;
         	}
             return rlMain;
         }
-        public List<String> getEnabledPackages(){
-        	List<String> out = new ArrayList<String>();
-        	PackageInfo pm = new PackageInfo();
-        	
-        	
-        	try {
-				Process process =Runtime.getRuntime().exec("pm list packages -e");
-				 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				String in = "";
-				while((in=br.readLine())!=null){
-					out.add(in);
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-        	return out;
-        }
-        
         public List<String> getAllPackages(){
         	List<String> out = new ArrayList<String>();
         	final PackageManager pm = getPackageManager();
         	List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        	allNames.clear();
+        	allEnabled.clear();
         	for(ApplicationInfo packageInfo : packages){
         		out.add(packageInfo.packageName);
         		allNames.add(pm.getApplicationLabel(packageInfo).toString());
