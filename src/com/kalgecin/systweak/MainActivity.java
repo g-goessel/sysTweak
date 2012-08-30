@@ -27,16 +27,16 @@ public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
 
-	private settingsDB dataSrc;
-	ProgressDialog progressBar;
-	private int progressBarStatus = 0;
+	private static settingsDB dataSrc;
+	static ProgressDialog progressBar;
+	private static int progressBarStatus = 0;
 	private static int cnt;
 	private static boolean bnt;
 	private static String str="";
-	private Handler progressBarHandler = new Handler();
+	private static Handler progressBarHandler = new Handler();
 	
-	Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
-	Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
+	static Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
+	static Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
 	
 	public static String[] checks = {"swRomManager","swLiveWallpapers","swCMWallpapers","swGTTS","swMovie","swGmail","swTvOut","swPhone",
 						"swApollo","swDSPManager","swEmail","swNewsAndWeather","swGTalk","swTerminalEmulator","swTorch",
@@ -48,7 +48,7 @@ public class MainActivity extends FragmentActivity {
 						"com.google.android.apps.genie.geniewidget","com.google.android.talk","jackpal.androidterm",
 						"net.cactii.flash2","com.android.providers.media/com.android.providers.media.MediaScannerReceiver"};
 	
-	Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
+	static Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
 						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner};
 	Boolean[] CBStatuses = {false,false,false,false,false,true,false,true,true,
 							false,false,false,true,true,true,true};
@@ -68,7 +68,7 @@ public class MainActivity extends FragmentActivity {
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         
-        Button btnSet 		= (Button) findViewById(R.id.btnSetOnBoot);
+       
         
         
         dataSrc = new settingsDB(this);
@@ -116,48 +116,52 @@ public class MainActivity extends FragmentActivity {
 				}
 			}
 		}).start();
-        btnSet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				progressBar.setProgress(0);
-				progressBar.setTitle("Setting....");
-				progressBar.setMessage("");
-				progressBar.show();
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						Log.i("sysTweaks_setChecks","Entering thread");
-						while(progressBarStatus < checks.length){
-							//Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
-							try {
-								Thread.sleep(200);
-							} catch (InterruptedException e) {
-								e.printStackTrace();
-							}
-							//progressBar.setProgress(progressBarStatus);
-							progressBarHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									progressBar.setProgress(progressBarStatus);
-									progressBar.setMessage(str);
-								}
-							});
-						}
-						if(progressBarStatus>=checks.length){
-							progressBar.dismiss();
-							progressBarStatus=0;
-						}
-					}
-				}).start();
-				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						SetChecks();
-					}
-				}).start();
-				
-			}
-		});
+       
+    }
+    public static void setupMain(View v){
+    	 Button btnSet 		= (Button) v.findViewById(R.id.btnSetOnBoot);
+    	 btnSet.setOnClickListener(new View.OnClickListener() {
+ 			@Override
+ 			public void onClick(View v) {
+ 				progressBar.setProgress(0);
+ 				progressBar.setTitle("Setting....");
+ 				progressBar.setMessage("");
+ 				progressBar.show();
+ 				new Thread(new Runnable() {
+ 					@Override
+ 					public void run() {
+ 						Log.i("sysTweaks_setChecks","Entering thread");
+ 						while(progressBarStatus < checks.length){
+ 							//Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
+ 							try {
+ 								Thread.sleep(200);
+ 							} catch (InterruptedException e) {
+ 								e.printStackTrace();
+ 							}
+ 							//progressBar.setProgress(progressBarStatus);
+ 							progressBarHandler.post(new Runnable() {
+ 								@Override
+ 								public void run() {
+ 									progressBar.setProgress(progressBarStatus);
+ 									progressBar.setMessage(str);
+ 								}
+ 							});
+ 						}
+ 						if(progressBarStatus>=checks.length){
+ 							progressBar.dismiss();
+ 							progressBarStatus=0;
+ 						}
+ 					}
+ 				}).start();
+ 				new Thread(new Runnable() {
+ 					@Override
+ 					public void run() {
+ 						SetChecks();
+ 					}
+ 				}).start();
+ 				
+ 			}
+ 		});
     }
     public static boolean[] check_exists(String[] package_name){
     	String fTag = "sysTweak_checkExists";
@@ -260,7 +264,7 @@ public class MainActivity extends FragmentActivity {
     		
     	}
     }
-    public void SetChecks(){
+    public static void SetChecks(){
     	 String fTag = "sysTweak_setChecks";
          ProcessBuilder cmd;
          //@SuppressWarnings("unused")
@@ -279,12 +283,13 @@ public class MainActivity extends FragmentActivity {
         		 progressBarStatus = i+1;
         		 args[4] = CHKnames[i];
         		 cnt=i;
-        		 runOnUiThread(new Runnable() {
+        		 /*runOnUiThread(new Runnable() {
 					@Override
 					public void run() {
 						str=CBchecks[cnt].getText().toString();
 					}
-				});
+				});*/
+        		 str=CBchecks[cnt].getText().toString();
         		 if(CBchecks[i].isChecked()){
         			 if(!check_status(new String[] {args[4]})[0]){
         				 comm = "pm enable "+args[4]+";";
@@ -384,7 +389,10 @@ public class MainActivity extends FragmentActivity {
         	View rlMain = null;
         	Log.i("Creating",Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
         	switch (args.getInt(ARG_SECTION_NUMBER)){
-        		case 1: return inflater.inflate(R.layout.activity_main, container,false);
+        		case 1: 
+        			rlMain = inflater.inflate(R.layout.activity_main, container,false);
+        			MainActivity.setupMain(rlMain);
+        			return rlMain;
         		case 2: return inflater.inflate(R.layout.all, container,false);
         	}
             return rlMain;
