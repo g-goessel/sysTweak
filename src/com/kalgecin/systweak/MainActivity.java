@@ -4,19 +4,29 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+
 import android.os.Bundle;
 import android.os.Handler;
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Switch;
 
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
+    SectionsPagerAdapter mSectionsPagerAdapter;
+    ViewPager mViewPager;
+
 	private settingsDB dataSrc;
 	ProgressDialog progressBar;
 	private int progressBarStatus = 0;
@@ -49,7 +59,15 @@ public class MainActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        setContentView(R.layout.main);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mSectionsPagerAdapter);
+        
         Button btnSet 		= (Button) findViewById(R.id.btnSetOnBoot);
         
         
@@ -323,5 +341,53 @@ public class MainActivity extends Activity {
 	    		return super.onOptionsItemSelected(item);
     		
     	}
+    }
+    public class SectionsPagerAdapter extends FragmentPagerAdapter {
+
+        public SectionsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int i) {
+            Fragment fragment = new DummySectionFragment();
+            Bundle args = new Bundle();
+            args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
+            fragment.setArguments(args);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case 0: return getString(R.string.title_section1).toUpperCase();
+                case 1: return getString(R.string.title_section2).toUpperCase();
+            }
+            return null;
+        }
+    }
+    public static class DummySectionFragment extends Fragment {
+        public DummySectionFragment() {
+        }
+
+        public static final String ARG_SECTION_NUMBER = "section_number";
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                Bundle savedInstanceState) {
+        	Bundle args = getArguments();
+        	View rlMain = null;
+        	Log.i("Creating",Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
+        	switch (args.getInt(ARG_SECTION_NUMBER)){
+        		case 1: return inflater.inflate(R.layout.activity_main, container,false);
+        		case 2: return inflater.inflate(R.layout.all, container,false);
+        	}
+            return rlMain;
+        }
     }
 }

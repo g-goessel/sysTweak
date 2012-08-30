@@ -1,5 +1,9 @@
 <resources>
-
+	<string name="title_section1">Common</string>
+	<string name="title_section2">All</string>
+	<!-- Strings for 'all' section -->
+	<string name="all_apps">All Installed Aplications</string>
+	<!-- end -->
     <string name="app_name">SysTweak</string>
     <string name="hello_world">Please note:\n
         These settings are designed for the \n
