@@ -418,12 +418,15 @@ public class MainActivity extends FragmentActivity {
         			rlMain = inflater.inflate(R.layout.all, container,false); 
         			
         			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
-        			ScrollView rlSV = (ScrollView) rlMain.findViewById(R.id.rlAllSV);
-        			((ViewGroup)rlSV.getParent()).removeView(rlSV);
+        			//ScrollView rlSV = (ScrollView) rlMain.findViewById(R.id.rlAllSV);
+        			//((ViewGroup)rlSV.getParent()).removeView(rlSV);
         			allPackages = getAllPackages();
-        			allSwitches.clear();
         			for(int i=0;i<allPackages.size();i++){
-						allSwitches.add(new Switch(getActivity()));
+        				if(allSwitches.size()>i){
+        					allSwitches.set(i,new Switch(getActivity()));
+        				}else{
+        					allSwitches.add(new Switch(getActivity()));
+        				}
 						allSwitches.get(i).setText(allNames.get(i));
 						allSwitches.get(i).setChecked(allEnabled.get(i));
 						rlAll.addView(allSwitches.get(i));
