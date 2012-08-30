@@ -52,7 +52,7 @@ public class MainActivity extends FragmentActivity {
 						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner};
 	Boolean[] CBStatuses = {false,false,false,false,false,true,false,true,true,
 							false,false,false,true,true,true,true};
-	int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
+	static int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
 						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
 	
@@ -120,9 +120,12 @@ public class MainActivity extends FragmentActivity {
     }
     public static void setupMain(View v){
     	 Button btnSet 		= (Button) v.findViewById(R.id.btnSetOnBoot);
+    	 for(int i=0;i<checks.length;i++){
+         	CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
+         }
     	 btnSet.setOnClickListener(new View.OnClickListener() {
  			@Override
- 			public void onClick(View v) {
+ 			public void onClick(final View v) {
  				progressBar.setProgress(0);
  				progressBar.setTitle("Setting....");
  				progressBar.setMessage("");
@@ -156,7 +159,7 @@ public class MainActivity extends FragmentActivity {
  				new Thread(new Runnable() {
  					@Override
  					public void run() {
- 						SetChecks();
+ 						SetChecks(v);
  					}
  				}).start();
  				
@@ -225,16 +228,15 @@ public class MainActivity extends FragmentActivity {
     	return btr;
     }
     public void loadChecks(){
-    	for(int i=0;i<checks.length;i++){
-        	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
-        }
+    	
     	String tag = "sysTweaks_loadChecks";
     	boolean[] btr = check_exists(CHKnames);
-    	
+    	Log.i(tag,"Entered");
 		for(int i=0;i<checks.length;i++){
 			progressBarStatus = i+1;
 			
     		Boolean b;
+    		Log.i(tag,"btr["+i+"] = "+Boolean.toString(btr[i]));
     		if(btr[i]){
     			CBchecks[i].setEnabled(true);
     			Log.i(tag,"enabled "+checks[i]);
@@ -264,7 +266,7 @@ public class MainActivity extends FragmentActivity {
     		
     	}
     }
-    public static void SetChecks(){
+    public static void SetChecks(View v){
     	 String fTag = "sysTweak_setChecks";
          ProcessBuilder cmd;
          //@SuppressWarnings("unused")
