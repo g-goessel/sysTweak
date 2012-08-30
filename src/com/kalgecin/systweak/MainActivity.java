@@ -1,9 +1,13 @@
 package com.kalgecin.systweak;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +18,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -21,6 +26,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 public class MainActivity extends FragmentActivity {
@@ -55,7 +62,9 @@ public class MainActivity extends FragmentActivity {
 	static int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
 						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
-	
+	static List<String> allPackages = new ArrayList<String>();
+	static List<String> allEnabled = new ArrayList<String>();
+	static List<Switch> allSwitches = new ArrayList<Switch>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -395,9 +404,50 @@ public class MainActivity extends FragmentActivity {
         			rlMain = inflater.inflate(R.layout.activity_main, container,false);
         			MainActivity.setupMain(rlMain);
         			return rlMain;
-        		case 2: return inflater.inflate(R.layout.all, container,false);
+        		case 2: 
+        			rlMain = inflater.inflate(R.layout.all, container,false); 
+        			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
+        			allPackages = getAllPackages();
+        			allEnabled = getEnabledPackages();
+        			for(int i=0;i<allPackages.size();i++){
+						allSwitches.add(new Switch(getActivity()));
+						allSwitches.get(i).setText(allPackages.get(i));
+						rlAll.addView(allSwitches.get(i));
+        			}
+        			return rlMain;
         	}
             return rlMain;
+        }
+        public List<String> getEnabledPackages(){
+        	List<String> out = new ArrayList<String>();
+        	try {
+				Process process =Runtime.getRuntime().exec("pm list packages -e");
+				 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				String in = "";
+				while((in=br.readLine())!=null){
+					out.add(in);
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	return out;
+        }
+        
+        public List<String> getAllPackages(){
+        	List<String> out = new ArrayList<String>();
+        	try {
+				Process process =Runtime.getRuntime().exec("pm list packages");
+				 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+				String in = "";
+				while((in=br.readLine())!=null){
+					out.add(in);
+				}
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+        	return out;
         }
     }
 }

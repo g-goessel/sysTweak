@@ -16,14 +16,15 @@ public final class R {
     }
     public static final class id {
         public static final int btnSetOnBoot=0x7f070013;
-        public static final int btnSettingsSave=0x7f070017;
-        public static final int chkSettings_onboot=0x7f070016;
+        public static final int btnSettingsSave=0x7f070018;
+        public static final int chkSettings_onboot=0x7f070017;
         public static final int lblNote=0x7f070000;
         public static final int lyContents=0x7f070002;
-        public static final int menu_about=0x7f070019;
-        public static final int menu_settings=0x7f070018;
-        public static final int pager=0x7f070014;
-        public static final int pager_title_strip=0x7f070015;
+        public static final int menu_about=0x7f07001a;
+        public static final int menu_settings=0x7f070019;
+        public static final int pager=0x7f070015;
+        public static final int pager_title_strip=0x7f070016;
+        public static final int rlAll=0x7f070014;
         public static final int scrMain=0x7f070001;
         public static final int swApollo=0x7f07000b;
         public static final int swCMWallpapers=0x7f070005;
