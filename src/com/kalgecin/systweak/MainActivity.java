@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Switch;
 
 public class MainActivity extends FragmentActivity {
@@ -259,13 +260,7 @@ public class MainActivity extends FragmentActivity {
         		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
         		cnt=i;
         		bnt=b;
-        		runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						CBchecks[cnt].setChecked(bnt);
-						str=CBchecks[cnt].getText().toString();
-					}
-				});
+        		
         		//CBchecks[i].setChecked(b);
         		CBStatuses[i]=b;
     		}else{
@@ -280,6 +275,15 @@ public class MainActivity extends FragmentActivity {
     		}
     		
     	}
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				for(int i=0;i<checks.length;i++){
+					CBchecks[i].setChecked(CBStatuses[i]);
+					str=CBchecks[i].getText().toString();
+				}
+			}
+		});
     }
     public static void SetChecks(View v){
     	 String fTag = "sysTweak_setChecks";
@@ -412,15 +416,18 @@ public class MainActivity extends FragmentActivity {
         			return rlMain;
         		case 2: 
         			rlMain = inflater.inflate(R.layout.all, container,false); 
+        			
         			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
-        			rlAll.removeAllViews();
+        			ScrollView rlSV = (ScrollView) rlMain.findViewById(R.id.rlAllSV);
+        			((ViewGroup)rlSV.getParent()).removeView(rlSV);
         			allPackages = getAllPackages();
+        			allSwitches.clear();
         			for(int i=0;i<allPackages.size();i++){
 						allSwitches.add(new Switch(getActivity()));
 						allSwitches.get(i).setText(allNames.get(i));
 						allSwitches.get(i).setChecked(allEnabled.get(i));
-						rlAll.removeView(allSwitches.get(i));
 						rlAll.addView(allSwitches.get(i));
+						
         			}
         			Button btnSet = (Button) rlMain.findViewById(R.id.btnAllApply);
         			btnSet.setOnClickListener(new View.OnClickListener() {

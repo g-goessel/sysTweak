@@ -4,10 +4,32 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.util.List;
 
+import android.app.Activity;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.os.Looper;
 import android.util.Log;
 
-public class SwitchManager {
+public class SwitchManager extends Activity{
+	static PackageManager pm;
+	public SwitchManager() {
+		pm = getPackageManager();
+	}
+	public static boolean checkState(String packageName){
+		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		for(ApplicationInfo packageInfo : packages){
+			if(packageInfo.packageName.equalsIgnoreCase(packageName)){
+				if(packageInfo.enabled){
+					return true;
+				}else{
+					return false;
+				}
+			}
+		}
+		return false;
+	}
 	public static void toggleState(String packageName, boolean state){
 		String tag = "sysTweak_SMtoggleState";
 		Log.i(tag,"Toggle "+ packageName+" to "+state);

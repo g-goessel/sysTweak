@@ -10,7 +10,8 @@
 	    android:text="@string/apply"/>
 	<ScrollView
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content">
+	    android:layout_height="wrap_content"
+	    android:id="@+id/rlAllSV">
 	    
 	    <LinearLayout
 	    android:layout_width="match_parent"
