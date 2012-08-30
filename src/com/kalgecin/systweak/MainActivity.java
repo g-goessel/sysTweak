@@ -269,7 +269,13 @@ public class MainActivity extends FragmentActivity {
         		//CBchecks[i].setChecked(b);
         		CBStatuses[i]=b;
     		}else{
-    			CBchecks[i].setEnabled(false);
+    			runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						CBchecks[cnt].setEnabled(false);
+					}
+				});
+    			
     			Log.i(tag,"disabled "+checks[i]);
     		}
     		
