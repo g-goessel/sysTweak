@@ -13,6 +13,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -63,7 +66,8 @@ public class MainActivity extends FragmentActivity {
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
 						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
 	static List<String> allPackages = new ArrayList<String>();
-	static List<String> allEnabled = new ArrayList<String>();
+	static List<Boolean> allEnabled = new ArrayList<Boolean>();
+	static List<String> allNames = new ArrayList<String>();
 	static List<Switch> allSwitches = new ArrayList<Switch>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -393,7 +397,7 @@ public class MainActivity extends FragmentActivity {
             return null;
         }
     }
-    public static class DummySectionFragment extends Fragment {
+    public class DummySectionFragment extends Fragment {
         public DummySectionFragment() {
         }
 
@@ -413,11 +417,12 @@ public class MainActivity extends FragmentActivity {
         		case 2: 
         			rlMain = inflater.inflate(R.layout.all, container,false); 
         			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
+        			rlAll.removeAllViews();
         			allPackages = getAllPackages();
-        			allEnabled = getEnabledPackages();
         			for(int i=0;i<allPackages.size();i++){
 						allSwitches.add(new Switch(getActivity()));
-						allSwitches.get(i).setText(allPackages.get(i));
+						allSwitches.get(i).setText(allNames.get(i));
+						allSwitches.get(i).setChecked(allEnabled.get(i));
 						rlAll.addView(allSwitches.get(i));
         			}
         			return rlMain;
@@ -426,6 +431,9 @@ public class MainActivity extends FragmentActivity {
         }
         public List<String> getEnabledPackages(){
         	List<String> out = new ArrayList<String>();
+        	PackageInfo pm = new PackageInfo();
+        	
+        	
         	try {
 				Process process =Runtime.getRuntime().exec("pm list packages -e");
 				 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -442,17 +450,13 @@ public class MainActivity extends FragmentActivity {
         
         public List<String> getAllPackages(){
         	List<String> out = new ArrayList<String>();
-        	try {
-				Process process =Runtime.getRuntime().exec("pm list packages");
-				 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-				String in = "";
-				while((in=br.readLine())!=null){
-					out.add(in);
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+        	final PackageManager pm = getPackageManager();
+        	List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+        	for(ApplicationInfo packageInfo : packages){
+        		out.add(packageInfo.packageName);
+        		allNames.add(pm.getApplicationLabel(packageInfo).toString());
+        		allEnabled.add(packageInfo.enabled);
+        	}
         	return out;
         }
     }
