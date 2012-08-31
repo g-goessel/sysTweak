@@ -1,5 +1,9 @@
 <resources>
-
+	<string name="title_section1">Comum</string>
+	<string name="title_section2">Todas</string>
+	<!-- Strings for 'all' section -->
+	<string name="all_apps">Todas as Aplicações Instaladas</string>
+	<!-- end -->
     <string name="app_name">SysTweak</string>
     <string name="hello_world">Nota:\n
         Estas definições são criadas para \n
@@ -25,6 +29,7 @@
 	<string name="google_talk">Google Talk</string>
 	<string name="terminal_emulator">Terminal Emulator</string>
 	<string name="torch">Tocha</string>
+	<string name="media_scanner">Scanner Multimédia</string>
 	<!-- Not yet added -->
 	<!-- end -->
 	<string name="boot">Definir ao Iniciar</string>
@@ -32,4 +37,11 @@
 	<string name="about_graphics">Grafismo agradecido a: </string>
 	<string name="about_translations">Traduções agradecidas a:</string>
 	<string name="about_about">Acerca:</string>
+	<string name="about_translations_thanks">\n
+	    Francês - Minidou-77\n
+	    Português - Ghelfalath\n
+	    Árabe - Kadhim7\n
+	    Italiano - ginlik1996\n
+	    Dinamarquês - JosseX\n
+	    Polaco - dedopl\n</string>
 </resources>
