@@ -9,17 +9,23 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.app.ActionBar.LayoutParams;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,8 +33,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.Switch;
+import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
@@ -66,7 +74,8 @@ public class MainActivity extends FragmentActivity {
 	static List<Boolean> allEnabled = new ArrayList<Boolean>();
 	static List<String> allNames = new ArrayList<String>();
 	static List<Switch> allSwitches = new ArrayList<Switch>();
-    @Override
+    
+	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
@@ -77,9 +86,6 @@ public class MainActivity extends FragmentActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        
-       
-        
         
         dataSrc = new settingsDB(this);
         dataSrc.open();
@@ -129,6 +135,18 @@ public class MainActivity extends FragmentActivity {
        
     }
     public static void setupMain(View v){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+        builder.setMessage(R.string.hello_world)
+               .setCancelable(false)
+               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+        Log.i("sysTweak_setupMain","Showing alert");
+    	AlertDialog alert = builder.create();
+    	alert.show();
     	 Button btnSet 		= (Button) v.findViewById(R.id.btnSetOnBoot);
     	 for(int i=0;i<checks.length;i++){
          	CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
