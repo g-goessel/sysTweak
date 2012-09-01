@@ -1,51 +1,27 @@
 package com.kalgecin.systweak;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Bundle;
-import android.os.Handler;
-import android.app.ActionBar.LayoutParams;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.ScrollView;
 import android.widget.Switch;
-import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     public static View rlMain = null;
 	private static settingsDB dataSrc;
-	private static int cnt;
-	private static Handler progressBarHandler = new Handler();
 	
 	static Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
 	static Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
@@ -91,87 +67,16 @@ public class MainActivity extends FragmentActivity {
         dataSrc.open();
     	loadChecks();
     }
-    public static void setupMain(Activity v,View vi){
-    	AlertDialog.Builder builder = new AlertDialog.Builder(vi.getContext());
-        builder.setMessage(R.string.hello_world)
-               .setCancelable(false)
-               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-        Log.i("sysTweak_setupMain","Showing alert");
-    	AlertDialog alert = builder.create();
-    	alert.show();
-    }
-    public static boolean[] check_exists(String[] package_name){
-    	String fTag = "sysTweak_checkExists";
-    	boolean[] btr = new boolean[package_name.length];
-    	Log.i(fTag,"Entered");
-    	Process process;
-    	try {
-			process = Runtime.getRuntime().exec("pm list packages");
-		
-	    	BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-	    	String brstr = "";
-	    	while((brstr = br.readLine())!=null){
-	    		for(int i=0;i<package_name.length;i++){
-	    			if(brstr.contains(package_name[i])){
-	    				btr[i]=true;
-	    			}
-	    		}
-	    	}
-	    	for(int i=0;i<package_name.length;i++){
-	    		if(btr[i]!=true){
-	    			btr[i]=false;
-	    		}
-	    	}
-	    	btr[15]=true; //Media Scanner
-    	} catch (IOException e) {
-			e.printStackTrace();
-		}
-    	return btr;
-    }
-    public static boolean[] check_status(String[] package_name){
-    	Log.i("sysTweak_check_status","Entered");
-    	boolean[] btr = new boolean[package_name.length];
-    	
-    	Process process;
-    	try {
-			process =Runtime.getRuntime().exec("pm list packages -e");
-			String result = "";
-			BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			Log.i("sysTweak_check_status","reading");
-			while((result=br.readLine())!=null){
-				for(int i=0;i<package_name.length;i++){
-					if(result.contains(package_name[i])){
-						btr[i]=true;
-					}
-				}
-			}
-			for(int i=0;i<package_name.length;i++){
-				if(btr[i]!=true){
-					btr[i]=false;
-				}
-			}
-			br.close();
-			int res = process.waitFor();
-			Log.i("sysTweak_check_status","Exit status: "+res);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-    	Log.i("sysTweak_check_status","Exited");
-    	return btr;
-    }
     public void loadChecks(){
     	for(int i=0;i<checks.length;i++){
     		CBchecks[i] = (Switch) activity.findViewById(CBchecksID[i]);
          }
     	String tag = "sysTweaks_loadChecks";
-    	boolean[] btr = check_exists(CHKnames);
+    	boolean[] btr = new boolean[CHKnames.length];
+    	SwitchManager swm = new SwitchManager(getApplicationContext());
+    	for(int i=0;i<CHKnames.length;i++){
+    		btr[i]=swm.checkState(CHKnames[i]);
+    	}
     	Log.i(tag,"Entered");
 		for(int i=0;i<checks.length;i++){
 			
@@ -234,7 +139,8 @@ public class MainActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new DummySectionFragment(getApplicationContext(),activity);
+            Fragment fragment = new DummySectionFragment();
+            ((DummySectionFragment) fragment).setUP(getApplicationContext(),activity);
             Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);

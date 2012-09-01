@@ -1,8 +1,6 @@
 package com.kalgecin.systweak;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -10,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Looper;
 import android.util.Log;
 
 public class SwitchManager extends Activity{

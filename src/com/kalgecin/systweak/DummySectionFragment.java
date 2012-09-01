@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,13 +27,15 @@ public class DummySectionFragment extends Fragment {
 	Context context;
 	public Activity activity;
 	private SwitchManager swm;
-    public DummySectionFragment(Context c,Activity act) {
+    public static final String ARG_SECTION_NUMBER = "section_number";
+    
+    public DummySectionFragment() {
+    }
+    public void setUP(Context c,Activity act){
     	context = c;
     	activity = act;
     	swm = new SwitchManager(context);
     }
-
-    public static final String ARG_SECTION_NUMBER = "section_number";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +53,7 @@ public class DummySectionFragment extends Fragment {
     					SetChecks(v);	
     				}
     			});
-    			MainActivity.setupMain(activity,rlMain);
+    			setupMain(rlMain);
     			
     			return rlMain;
     		case 2: 
@@ -122,6 +126,20 @@ public class DummySectionFragment extends Fragment {
         }
         dataSrc.close();
    }
+    public void setupMain(View vi){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(vi.getContext());
+        builder.setMessage(R.string.hello_world)
+               .setCancelable(false)
+               .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+        Log.i("sysTweak_setupMain","Showing alert");
+    	AlertDialog alert = builder.create();
+    	alert.show();
+    }
     public List<String> getAllPackages(){
     	List<String> out = new ArrayList<String>();
     	final PackageManager pm = context.getPackageManager();
