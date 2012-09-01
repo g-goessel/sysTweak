@@ -159,6 +159,12 @@ public class MainActivity extends FragmentActivity {
  				progressBar.setTitle("Setting....");
  				progressBar.setMessage("");
  				progressBar.show();
+ 				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						SetChecks(v);
+					}
+				}).start();
  				/*new Thread(new Runnable() {
  					@Override
  					public void run() {*/
@@ -183,12 +189,6 @@ public class MainActivity extends FragmentActivity {
  							progressBar.dismiss();
  							progressBarStatus=0;
  						}
- 					/*}
- 				}).start();*/
- 				/*new Thread(new Runnable() {
- 					@Override
- 					public void run() {*/
- 						SetChecks(v);
  					/*}
  				}).start();*/
  				
@@ -257,7 +257,9 @@ public class MainActivity extends FragmentActivity {
     	return btr;
     }
     public void loadChecks(){
-    	
+    	for(int i=0;i<checks.length;i++){
+         	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
+         }
     	String tag = "sysTweaks_loadChecks";
     	boolean[] btr = check_exists(CHKnames);
     	Log.i(tag,"Entered");
@@ -297,61 +299,35 @@ public class MainActivity extends FragmentActivity {
     }
     public static void SetChecks(View v){
     	 String fTag = "sysTweak_setChecks";
-         ProcessBuilder cmd;
-         //@SuppressWarnings("unused")
-    	Process process;
-		 try {
-			//process = Runtime.getRuntime().exec("su");
-			 cmd = new ProcessBuilder("su");
-			process = cmd.start();
-			cmd.redirectErrorStream();
-	         //Enable or disable services/apps
-        	 String[] args = {"su","-c","pm","enable",""};
-        	 String comm = "";
-        	 OutputStream bw = process.getOutputStream();
-        	 BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        	 for(int i=0;i<checks.length;i++){
-        		 progressBarStatus = i+1;
-        		 args[4] = CHKnames[i];
-        		 cnt=i;
-        		 /*runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						str=CBchecks[cnt].getText().toString();
-					}
-				});*/
-        		 str=CBchecks[cnt].getText().toString();
-        		 if(CBchecks[i].isChecked()){
-        			 if(!check_status(new String[] {args[4]})[0]){
-        				 comm = "pm enable "+args[4]+";";
-            			 Log.i(fTag,"enabling "+args[4]);
-        			 }else{
-        				 Log.i(fTag,args[4]+" is already enabled");
-        				 continue;
-        			 }
-        		 }else{
-        			 if(check_status(new String[] {args[4]})[0]){
-	        			 comm = "pm disable "+args[4]+";";
-	        			 Log.i(fTag,"disabling "+args[4]);
-        			 }else{
-        				 Log.i(fTag,args[4]+" is already disabled");
-        				 continue;
-        			 }
-        		 }
-        		 Log.i(fTag,comm);
-        		 //bw = process.getOutputStream();
-        		 bw.write(comm.getBytes());
-        		 //bw.close();
-        		 //Log.i("Toggle_service","res: "+br.readLine());
-        	 }
-        	 bw.close();
-        	 br.close();
-        	 process.waitFor();
-         }catch(IOException e){
-        	 e.printStackTrace();
-         } catch (InterruptedException e) {
-			e.printStackTrace();
-		} 
+        
+         //Enable or disable services/apps
+    	 String[] args = {"su","-c","pm","enable",""};
+    	 for(int i=0;i<checks.length;i++){
+    		 progressBarStatus = i+1;
+    		 args[4] = CHKnames[i];
+    		 cnt=i;
+    		 str=CBchecks[cnt].getText().toString();
+    		 if(CBchecks[i].isChecked()){
+    			 if(!check_status(new String[] {args[4]})[0]){
+    				 //comm = "pm enable "+args[4]+";";
+        			 Log.i(fTag,"enabling "+args[4]);
+        			 SwitchManager.toggleState(args[4], true);
+    			 }else{
+    				 Log.i(fTag,args[4]+" is already enabled");
+    				 continue;
+    			 }
+    		 }else{
+    			 if(check_status(new String[] {args[4]})[0]){
+        			 //comm = "pm disable "+args[4]+";";
+        			 Log.i(fTag,"disabling "+args[4]);
+        			 SwitchManager.toggleState(args[4], false);
+    			 }else{
+    				 Log.i(fTag,args[4]+" is already disabled");
+    				 continue;
+    			 }
+    		 }
+    	 }
+    	 
          //Save current state of checks to DB
          for(int i=0;i<checks.length;i++){
         	 dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
