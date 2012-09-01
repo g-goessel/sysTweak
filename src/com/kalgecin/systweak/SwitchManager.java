@@ -17,6 +17,15 @@ public class SwitchManager extends Activity{
 		context = c;
 		pm = context.getPackageManager();
 	}
+	public boolean checkExists(String packageName){
+		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		for(ApplicationInfo packageInfo : packages){
+			if(packageInfo.packageName.equalsIgnoreCase(packageName)){
+				return true;
+			}
+		}
+		return false;
+	}
 	public boolean checkState(String packageName){
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		for(ApplicationInfo packageInfo : packages){

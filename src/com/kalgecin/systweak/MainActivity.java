@@ -21,7 +21,7 @@ public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     public static View rlMain = null;
-	private static settingsDB dataSrc;
+	static settingsDB dataSrc;
 	
 	static Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
 	static Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
@@ -65,49 +65,9 @@ public class MainActivity extends FragmentActivity {
         
         dataSrc = new settingsDB(this);
         dataSrc.open();
-    	loadChecks();
+    	
     }
-    public void loadChecks(){
-    	for(int i=0;i<checks.length;i++){
-    		CBchecks[i] = (Switch) activity.findViewById(CBchecksID[i]);
-         }
-    	String tag = "sysTweaks_loadChecks";
-    	boolean[] btr = new boolean[CHKnames.length];
-    	SwitchManager swm = new SwitchManager(getApplicationContext());
-    	for(int i=0;i<CHKnames.length;i++){
-    		btr[i]=swm.checkState(CHKnames[i]);
-    	}
-    	Log.i(tag,"Entered");
-		for(int i=0;i<checks.length;i++){
-			
-    		Boolean b;
-    		Log.i(tag,"btr["+i+"] = "+Boolean.toString(btr[i]));
-    		if(btr[i]){
-    			CBchecks[i].setEnabled(true);
-    			Log.i(tag,"enabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
-    			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
-        			b=true;
-        			Log.i(tag,"on");
-        		}else{
-        			b=false;
-        			Log.i(tag,"off");
-        		}
-        		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
-        		
-        		CBchecks[i].setChecked(b);
-        		CBStatuses[i]=b;
-    		}else{
-				CBchecks[i].setEnabled(false);
-    			Log.i(tag,"disabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
-    		}
-    		
-    	}
-
-		for(int i=0;i<checks.length;i++){
-			CBchecks[i].setChecked(CBStatuses[i]);
-		}
-
-    }
+    
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

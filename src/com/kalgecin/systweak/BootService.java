@@ -65,14 +65,14 @@ public class BootService extends Service{
 				for(int i=0;i<checks.length;i++){
 					args[4] = CHKnames[i];
 	        		 if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){//CBchecks[i].isChecked()){
-	        			 if(!swm.checkState(args[4])){ //TODO: check if exists
+	        			 if(!swm.checkExists(args[4])){ 
 	        				 comm = "pm enable "+args[4]+";";
 	            			 Log.i(fTag,"enabling "+args[4]);
 	        			 }else{
 	        				 Log.i(fTag,args[4]+" is already enabled");
 	        			 }
 	        		 }else{
-	        			 if(swm.checkState(args[4])){
+	        			 if(swm.checkExists(args[4])){
 		        			 comm = "pm disable "+args[4]+";";
 		        			 Log.i(fTag,"disabling "+args[4]);
 	        			 }else{

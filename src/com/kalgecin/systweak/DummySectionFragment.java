@@ -54,7 +54,7 @@ public class DummySectionFragment extends Fragment {
     				}
     			});
     			setupMain(rlMain);
-    			
+    			loadChecks(rlMain);
     			return rlMain;
     		case 2: 
     			rlMain = inflater.inflate(R.layout.all, container,false); 
@@ -103,16 +103,24 @@ public class DummySectionFragment extends Fragment {
    	 for(int i=0;i<checks.length;i++){
    		 if(CBchecks[i].isChecked()){
    			 if(!swm.checkState(CHKnames[i])){
-       			 Log.i(fTag,"enabling "+CHKnames[i]);
-       			 swm.toggleState(CHKnames[i], true);
+   				 if(CBchecks[i].isEnabled()){
+	       			 Log.i(fTag,"enabling "+CHKnames[i]);
+	       			 swm.toggleState(CHKnames[i], true);
+   				 }else{
+   					Log.i(fTag,CHKnames[i]+"is not installed");
+   				 }
    			 }else{
    				 Log.i(fTag,CHKnames[i]+" is already enabled");
    				 continue;
    			 }
    		 }else{
    			 if(swm.checkState(CHKnames[i])){
-       			 Log.i(fTag,"disabling "+CHKnames[i]);
-       			 swm.toggleState(CHKnames[i], false);
+   				if(!CBchecks[i].isEnabled()){
+	       			 Log.i(fTag,"disabling "+CHKnames[i]);
+	       			 swm.toggleState(CHKnames[i], false);
+   				}else{
+   					Log.i(fTag,CHKnames[i]+"is not installed");
+   				}
    			 }else{
    				 Log.i(fTag,CHKnames[i]+" is already disabled");
    				 continue;
@@ -139,6 +147,52 @@ public class DummySectionFragment extends Fragment {
         Log.i("sysTweak_setupMain","Showing alert");
     	AlertDialog alert = builder.create();
     	alert.show();
+    }
+    public void loadChecks(View v){
+    	String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
+    	Switch[] CBchecks = MainActivity.CBchecks;
+    	int[] CBchecksID = MainActivity.CBchecksID;
+    	Boolean[] CBStatuses = MainActivity.CBStatuses;
+    	
+    	for(int i=0;i<checks.length;i++){
+    		CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
+         }
+    	String tag = "sysTweaks_loadChecks";
+    	boolean[] btr = new boolean[CHKnames.length];
+    	SwitchManager swm = new SwitchManager(context);
+    	for(int i=0;i<CHKnames.length;i++){
+    		btr[i]=swm.checkExists(CHKnames[i]);
+    	}
+    	Log.i(tag,"Entered");
+		for(int i=0;i<checks.length;i++){
+			
+    		Boolean b;
+    		Log.i(tag,"btr["+i+"] = "+Boolean.toString(btr[i]));
+    		if(btr[i]){
+    			CBchecks[i].setEnabled(true);
+    			Log.i(tag,"enabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
+    			if(MainActivity.dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
+        			b=true;
+        			Log.i(tag,"on");
+        		}else{
+        			b=false;
+        			Log.i(tag,"off");
+        		}
+        		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
+        		
+        		CBchecks[i].setChecked(b);
+        		CBStatuses[i]=b;
+    		}else{
+				CBchecks[i].setEnabled(false);
+    			Log.i(tag,"disabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
+    		}
+    		
+    	}
+
+		for(int i=0;i<checks.length;i++){
+			CBchecks[i].setChecked(CBStatuses[i]);
+		}
+
     }
     public List<String> getAllPackages(){
     	List<String> out = new ArrayList<String>();
