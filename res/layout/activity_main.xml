@@ -11,6 +11,7 @@
         android:layout_centerVertical="false"
         android:text="@string/hello_world"
         tools:context=".MainActivity" />
+     
 <ScrollView 
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -69,9 +70,8 @@
 	    <Switch android:layout_below="@+id/swTorch" android:id="@+id/swMediaScanner" android:visibility="visible"
 	        	android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/media_scanner" 
 	        	android:checked="true"/>
-	    <Button android:layout_below="@id/swMediaScanner" android:id="@+id/btnSetOnBoot"
-	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply" 
-	        	android:checked="true" />
+	   <Button android:id="@+id/btnSetOnBoot" android:layout_below="@id/swMediaScanner"
+	        	android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/apply"/>
 	</RelativeLayout>
 </ScrollView>
 </RelativeLayout>

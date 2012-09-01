@@ -7,6 +7,7 @@ import java.io.OutputStream;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Looper;
@@ -14,8 +15,10 @@ import android.util.Log;
 
 public class SwitchManager extends Activity{
 	static PackageManager pm;
-	public SwitchManager() {
-		pm = getPackageManager();
+	Context context;
+	public SwitchManager(Context c) {
+		context = c;
+		pm = context.getPackageManager();
 	}
 	public static boolean checkState(String packageName){
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
@@ -29,6 +32,12 @@ public class SwitchManager extends Activity{
 			}
 		}
 		return false;
+	}
+	public List<ApplicationInfo> getAllPackages(){
+		pm = getPackageManager();
+		
+		return pm.getInstalledApplications(PackageManager.GET_META_DATA);
+		
 	}
 	public static void toggleState(String packageName, boolean state){
 		String tag = "sysTweak_SMtoggleState";

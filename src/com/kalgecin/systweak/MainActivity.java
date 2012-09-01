@@ -10,6 +10,7 @@ import java.util.List;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.ActionBar.LayoutParams;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -41,13 +42,9 @@ import android.widget.TextView;
 public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
-
+    public static View rlMain = null;
 	private static settingsDB dataSrc;
-	static ProgressDialog progressBar;
-	private static int progressBarStatus = 0;
 	private static int cnt;
-	private static boolean bnt;
-	private static String str="";
 	private static Handler progressBarHandler = new Handler();
 	
 	static Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
@@ -63,9 +60,9 @@ public class MainActivity extends FragmentActivity {
 						"com.google.android.apps.genie.geniewidget","com.google.android.talk","jackpal.androidterm",
 						"net.cactii.flash2","com.android.providers.media/com.android.providers.media.MediaScannerReceiver"};
 	
-	static Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
+	public static Switch[] CBchecks = {swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,
 						swDSPManager,swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner};
-	Boolean[] CBStatuses = {false,false,false,false,false,true,false,true,true,
+	static Boolean[] CBStatuses = {false,false,false,false,false,true,false,true,true,
 							false,false,false,true,true,true,true};
 	static int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
@@ -74,69 +71,34 @@ public class MainActivity extends FragmentActivity {
 	static List<Boolean> allEnabled = new ArrayList<Boolean>();
 	static List<String> allNames = new ArrayList<String>();
 	static List<Switch> allSwitches = new ArrayList<Switch>();
-    
+    public static Activity activity;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.activity_main);
         setContentView(R.layout.main);
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
+        activity=this;
+        
+		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(),activity);
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
-        
+			
+       
+        Button btnSet 		= (Button) activity.findViewById(R.id.btnSetOnBoot);
+   	 	btnSet.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(final View v) {
+				SetChecks(v);	
+			}
+		});
         dataSrc = new settingsDB(this);
         dataSrc.open();
-        progressBar = new ProgressDialog(this);
-    	progressBar.setCancelable(false);
-    	progressBar.setTitle("Initializing....");
-    	progressBar.setMessage("");
-    	progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-    	progressBar.setProgress(0);
-    	progressBar.setMax(checks.length);
-    	progressBar.show();
-    	progressBarStatus = 0;
-    	/*new Thread(new Runnable() {
-			@Override
-			public void run() {*/
-				loadChecks();
-			/*}
-		}).start();*/
-		/*
-		new Thread(new Runnable() {
-		    		
-			@Override
-			public void run() {*/
-				Log.i("sysTweaks_loadChecks","Entering thread");
-				while(progressBarStatus < checks.length){
-					//Log.i("sysTweaks_loadChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
-					try {
-						Thread.sleep(200);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-					//progressBar.setProgress(progressBarStatus);
-					progressBarHandler.post(new Runnable() {
-						@Override
-						public void run() {
-							progressBar.setProgress(progressBarStatus);
-							progressBar.setMessage(str);
-							//Log.i("sysTweaks_loadChecks",str);
-						}
-					});
-				}
-				if(progressBarStatus>=checks.length){
-					progressBar.dismiss();
-					progressBarStatus=0;
-				}
-			/*}
-		}).start();*/
-       
+    	loadChecks();
     }
-    public static void setupMain(View v){
-    	AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
+    public static void setupMain(Activity v,View vi){
+    	AlertDialog.Builder builder = new AlertDialog.Builder(vi.getContext());
         builder.setMessage(R.string.hello_world)
                .setCancelable(false)
                .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -148,52 +110,6 @@ public class MainActivity extends FragmentActivity {
         Log.i("sysTweak_setupMain","Showing alert");
     	AlertDialog alert = builder.create();
     	alert.show();
-    	 Button btnSet 		= (Button) v.findViewById(R.id.btnSetOnBoot);
-    	 for(int i=0;i<checks.length;i++){
-         	CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
-         }
-    	 btnSet.setOnClickListener(new View.OnClickListener() {
- 			@Override
- 			public void onClick(final View v) {
- 				progressBar.setProgress(0);
- 				progressBar.setTitle("Setting....");
- 				progressBar.setMessage("");
- 				progressBar.show();
- 				new Thread(new Runnable() {
-					@Override
-					public void run() {
-						SetChecks(v);
-					}
-				}).start();
- 				/*new Thread(new Runnable() {
- 					@Override
- 					public void run() {*/
- 						Log.i("sysTweaks_setChecks","Entering thread");
- 						while(progressBarStatus < checks.length){
- 							//Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
- 							try {
- 								Thread.sleep(200);
- 							} catch (InterruptedException e) {
- 								e.printStackTrace();
- 							}
- 							//progressBar.setProgress(progressBarStatus);
- 							progressBarHandler.post(new Runnable() {
- 								@Override
- 								public void run() {
- 									progressBar.setProgress(progressBarStatus);
- 									progressBar.setMessage(str);
- 								}
- 							});
- 						}
- 						if(progressBarStatus>=checks.length){
- 							progressBar.dismiss();
- 							progressBarStatus=0;
- 						}
- 					/*}
- 				}).start();*/
- 				
- 			}
- 		});
     }
     public static boolean[] check_exists(String[] package_name){
     	String fTag = "sysTweak_checkExists";
@@ -258,19 +174,18 @@ public class MainActivity extends FragmentActivity {
     }
     public void loadChecks(){
     	for(int i=0;i<checks.length;i++){
-         	CBchecks[i] = (Switch) findViewById(CBchecksID[i]);
+    		CBchecks[i] = (Switch) activity.findViewById(CBchecksID[i]);
          }
     	String tag = "sysTweaks_loadChecks";
     	boolean[] btr = check_exists(CHKnames);
     	Log.i(tag,"Entered");
 		for(int i=0;i<checks.length;i++){
-			progressBarStatus = i+1;
 			
     		Boolean b;
     		Log.i(tag,"btr["+i+"] = "+Boolean.toString(btr[i]));
     		if(btr[i]){
     			CBchecks[i].setEnabled(true);
-    			Log.i(tag,"enabled "+checks[i]);
+    			Log.i(tag,"enabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
     			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
         			b=true;
         			Log.i(tag,"on");
@@ -279,21 +194,18 @@ public class MainActivity extends FragmentActivity {
         			Log.i(tag,"off");
         		}
         		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
-        		cnt=i;
-        		bnt=b;
         		
-        		//CBchecks[i].setChecked(b);
+        		CBchecks[i].setChecked(b);
         		CBStatuses[i]=b;
     		}else{
-				CBchecks[cnt].setEnabled(false);
-    			Log.i(tag,"disabled "+checks[i]);
+				CBchecks[i].setEnabled(false);
+    			Log.i(tag,"disabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
     		}
     		
     	}
 
 		for(int i=0;i<checks.length;i++){
 			CBchecks[i].setChecked(CBStatuses[i]);
-			str=CBchecks[i].getText().toString();
 		}
 
     }
@@ -303,13 +215,10 @@ public class MainActivity extends FragmentActivity {
          //Enable or disable services/apps
     	 String[] args = {"su","-c","pm","enable",""};
     	 for(int i=0;i<checks.length;i++){
-    		 progressBarStatus = i+1;
     		 args[4] = CHKnames[i];
     		 cnt=i;
-    		 str=CBchecks[cnt].getText().toString();
     		 if(CBchecks[i].isChecked()){
     			 if(!check_status(new String[] {args[4]})[0]){
-    				 //comm = "pm enable "+args[4]+";";
         			 Log.i(fTag,"enabling "+args[4]);
         			 SwitchManager.toggleState(args[4], true);
     			 }else{
@@ -318,7 +227,6 @@ public class MainActivity extends FragmentActivity {
     			 }
     		 }else{
     			 if(check_status(new String[] {args[4]})[0]){
-        			 //comm = "pm disable "+args[4]+";";
         			 Log.i(fTag,"disabling "+args[4]);
         			 SwitchManager.toggleState(args[4], false);
     			 }else{
@@ -355,14 +263,15 @@ public class MainActivity extends FragmentActivity {
     	}
     }
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        public SectionsPagerAdapter(FragmentManager fm) {
+    	public Activity activity;
+        public SectionsPagerAdapter(FragmentManager fm,Activity act) {
             super(fm);
+            activity = act;
         }
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new DummySectionFragment();
+            Fragment fragment = new DummySectionFragment(getApplicationContext(),activity);
             Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);
@@ -383,73 +292,5 @@ public class MainActivity extends FragmentActivity {
             return null;
         }
     }
-    public class DummySectionFragment extends Fragment {
-        public DummySectionFragment() {
-        }
-
-        public static final String ARG_SECTION_NUMBER = "section_number";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-        	Bundle args = getArguments();
-        	View rlMain = null;
-        	Log.i("Creating",Integer.toString(args.getInt(ARG_SECTION_NUMBER)));
-        	switch (args.getInt(ARG_SECTION_NUMBER)){
-        		case 1: 
-        			rlMain = inflater.inflate(R.layout.activity_main, container,false);
-        			MainActivity.setupMain(rlMain);
-        			return rlMain;
-        		case 2: 
-        			rlMain = inflater.inflate(R.layout.all, container,false); 
-        			
-        			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
-        			//ScrollView rlSV = (ScrollView) rlMain.findViewById(R.id.rlAllSV);
-        			//((ViewGroup)rlSV.getParent()).removeView(rlSV);
-        			allPackages = getAllPackages();
-        			for(int i=0;i<allPackages.size();i++){
-        				if(allSwitches.size()>i){
-        					allSwitches.set(i,new Switch(getActivity()));
-        				}else{
-        					allSwitches.add(new Switch(getActivity()));
-        				}
-						allSwitches.get(i).setText(allNames.get(i));
-						allSwitches.get(i).setChecked(allEnabled.get(i));
-						rlAll.addView(allSwitches.get(i));
-						
-        			}
-        			Button btnSet = (Button) rlMain.findViewById(R.id.btnAllApply);
-        			btnSet.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							allPackages = getAllPackages();
-							int i=0;
-							for(Switch swCur : allSwitches){
-								if(swCur.isChecked() && !allEnabled.get(i)){
-									SwitchManager.toggleState(allPackages.get(i), true);
-								}else if(!swCur.isChecked() && allEnabled.get(i)){
-									SwitchManager.toggleState(allPackages.get(i), false);
-								}
-								i++;
-							}
-						}
-					});
-        			return rlMain;
-        	}
-            return rlMain;
-        }
-        public List<String> getAllPackages(){
-        	List<String> out = new ArrayList<String>();
-        	final PackageManager pm = getPackageManager();
-        	List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
-        	allNames.clear();
-        	allEnabled.clear();
-        	for(ApplicationInfo packageInfo : packages){
-        		out.add(packageInfo.packageName);
-        		allNames.add(pm.getApplicationLabel(packageInfo).toString());
-        		allEnabled.add(packageInfo.enabled);
-        	}
-        	return out;
-        }
-    }
+   
 }
