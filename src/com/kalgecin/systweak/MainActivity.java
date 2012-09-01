@@ -98,16 +98,17 @@ public class MainActivity extends FragmentActivity {
     	progressBar.setMax(checks.length);
     	progressBar.show();
     	progressBarStatus = 0;
-    	new Thread(new Runnable() {
+    	/*new Thread(new Runnable() {
 			@Override
-			public void run() {
+			public void run() {*/
 				loadChecks();
-			}
-		}).start();
+			/*}
+		}).start();*/
+		/*
 		new Thread(new Runnable() {
 		    		
 			@Override
-			public void run() {
+			public void run() {*/
 				Log.i("sysTweaks_loadChecks","Entering thread");
 				while(progressBarStatus < checks.length){
 					//Log.i("sysTweaks_loadChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
@@ -130,8 +131,8 @@ public class MainActivity extends FragmentActivity {
 					progressBar.dismiss();
 					progressBarStatus=0;
 				}
-			}
-		}).start();
+			/*}
+		}).start();*/
        
     }
     public static void setupMain(View v){
@@ -158,9 +159,9 @@ public class MainActivity extends FragmentActivity {
  				progressBar.setTitle("Setting....");
  				progressBar.setMessage("");
  				progressBar.show();
- 				new Thread(new Runnable() {
+ 				/*new Thread(new Runnable() {
  					@Override
- 					public void run() {
+ 					public void run() {*/
  						Log.i("sysTweaks_setChecks","Entering thread");
  						while(progressBarStatus < checks.length){
  							//Log.i("sysTweaks_setChecks",progressBarStatus+":"+checks.length+":"+progressBar.getProgress());
@@ -182,14 +183,14 @@ public class MainActivity extends FragmentActivity {
  							progressBar.dismiss();
  							progressBarStatus=0;
  						}
- 					}
- 				}).start();
- 				new Thread(new Runnable() {
+ 					/*}
+ 				}).start();*/
+ 				/*new Thread(new Runnable() {
  					@Override
- 					public void run() {
+ 					public void run() {*/
  						SetChecks(v);
- 					}
- 				}).start();
+ 					/*}
+ 				}).start();*/
  				
  			}
  		});
@@ -282,26 +283,17 @@ public class MainActivity extends FragmentActivity {
         		//CBchecks[i].setChecked(b);
         		CBStatuses[i]=b;
     		}else{
-    			runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						CBchecks[cnt].setEnabled(false);
-					}
-				});
-    			
+				CBchecks[cnt].setEnabled(false);
     			Log.i(tag,"disabled "+checks[i]);
     		}
     		
     	}
-		runOnUiThread(new Runnable() {
-			@Override
-			public void run() {
-				for(int i=0;i<checks.length;i++){
-					CBchecks[i].setChecked(CBStatuses[i]);
-					str=CBchecks[i].getText().toString();
-				}
-			}
-		});
+
+		for(int i=0;i<checks.length;i++){
+			CBchecks[i].setChecked(CBStatuses[i]);
+			str=CBchecks[i].getText().toString();
+		}
+
     }
     public static void SetChecks(View v){
     	 String fTag = "sysTweak_setChecks";
