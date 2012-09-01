@@ -21,7 +21,7 @@ public class MainActivity extends FragmentActivity {
     SectionsPagerAdapter mSectionsPagerAdapter;
     ViewPager mViewPager;
     public static View rlMain = null;
-	static settingsDB dataSrc;
+	//static settingsDB dataSrc;
 	
 	static Switch swRomManager,swLiveWallpapers,swCMWallpapers,swGTTS,swMovie,swGmail,swTvOut,swPhone,swApollo,swDSPManager;
 	static Switch swEmail,swNewsAndWeather,swGTalk,swTerminalEmulator,swTorch,swMediaScanner;
@@ -63,8 +63,8 @@ public class MainActivity extends FragmentActivity {
 			
        
         
-        dataSrc = new settingsDB(this);
-        dataSrc.open();
+        //dataSrc = new settingsDB(this);
+        //dataSrc.open();
     	
     }
     

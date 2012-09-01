@@ -153,7 +153,9 @@ public class DummySectionFragment extends Fragment {
     	Switch[] CBchecks = MainActivity.CBchecks;
     	int[] CBchecksID = MainActivity.CBchecksID;
     	Boolean[] CBStatuses = MainActivity.CBStatuses;
-    	
+    	settingsDB dataSrc = new settingsDB(context);
+        dataSrc.open();
+        
     	for(int i=0;i<checks.length;i++){
     		CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
          }
@@ -171,7 +173,7 @@ public class DummySectionFragment extends Fragment {
     		if(btr[i]){
     			CBchecks[i].setEnabled(true);
     			Log.i(tag,"enabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
-    			if(MainActivity.dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
+    			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
         			b=true;
         			Log.i(tag,"on");
         		}else{
@@ -192,7 +194,7 @@ public class DummySectionFragment extends Fragment {
 		for(int i=0;i<checks.length;i++){
 			CBchecks[i].setChecked(CBStatuses[i]);
 		}
-
+		dataSrc.close();
     }
     public List<String> getAllPackages(){
     	List<String> out = new ArrayList<String>();

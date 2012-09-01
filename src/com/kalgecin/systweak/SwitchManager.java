@@ -18,6 +18,10 @@ public class SwitchManager extends Activity{
 		pm = context.getPackageManager();
 	}
 	public boolean checkExists(String packageName){
+		if(packageName.contains("/")){
+			packageName = packageName.substring(0, packageName.indexOf("/"));
+			Log.i("sysTweak_SMcheckExists",packageName);
+		}
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		for(ApplicationInfo packageInfo : packages){
 			if(packageInfo.packageName.equalsIgnoreCase(packageName)){
