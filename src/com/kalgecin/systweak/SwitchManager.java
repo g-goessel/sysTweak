@@ -20,7 +20,7 @@ public class SwitchManager extends Activity{
 		context = c;
 		pm = context.getPackageManager();
 	}
-	public static boolean checkState(String packageName){
+	public boolean checkState(String packageName){
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		for(ApplicationInfo packageInfo : packages){
 			if(packageInfo.packageName.equalsIgnoreCase(packageName)){
@@ -39,7 +39,7 @@ public class SwitchManager extends Activity{
 		return pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		
 	}
-	public static void toggleState(String packageName, boolean state){
+	public void toggleState(String packageName, boolean state){
 		String tag = "sysTweak_SMtoggleState";
 		Log.i(tag,"Toggle "+ packageName+" to "+state);
 		Process process;
@@ -50,7 +50,6 @@ public class SwitchManager extends Activity{
 			cmd.redirectErrorStream();
 			String comm = "";
        	 	OutputStream bw = process.getOutputStream();
-       	 	BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
        	 	if(state){
        	 		comm = "pm enable " + packageName + ";";
        	 		Log.i(tag,"enabling "+packageName);
@@ -60,7 +59,6 @@ public class SwitchManager extends Activity{
        	 	}
        	 	bw.write(comm.getBytes());
        	 	bw.close();
-       	 	br.close();
        	 	int exit = process.waitFor();
        	 	Log.i(tag,"Exit status: " + exit);
 		} catch (IOException e) {

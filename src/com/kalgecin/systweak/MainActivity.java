@@ -86,13 +86,7 @@ public class MainActivity extends FragmentActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
 			
        
-        Button btnSet 		= (Button) activity.findViewById(R.id.btnSetOnBoot);
-   	 	btnSet.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(final View v) {
-				SetChecks(v);	
-			}
-		});
+        
         dataSrc = new settingsDB(this);
         dataSrc.open();
     	loadChecks();
@@ -209,38 +203,7 @@ public class MainActivity extends FragmentActivity {
 		}
 
     }
-    public static void SetChecks(View v){
-    	 String fTag = "sysTweak_setChecks";
-        
-         //Enable or disable services/apps
-    	 String[] args = {"su","-c","pm","enable",""};
-    	 for(int i=0;i<checks.length;i++){
-    		 args[4] = CHKnames[i];
-    		 cnt=i;
-    		 if(CBchecks[i].isChecked()){
-    			 if(!check_status(new String[] {args[4]})[0]){
-        			 Log.i(fTag,"enabling "+args[4]);
-        			 SwitchManager.toggleState(args[4], true);
-    			 }else{
-    				 Log.i(fTag,args[4]+" is already enabled");
-    				 continue;
-    			 }
-    		 }else{
-    			 if(check_status(new String[] {args[4]})[0]){
-        			 Log.i(fTag,"disabling "+args[4]);
-        			 SwitchManager.toggleState(args[4], false);
-    			 }else{
-    				 Log.i(fTag,args[4]+" is already disabled");
-    				 continue;
-    			 }
-    		 }
-    	 }
-    	 
-         //Save current state of checks to DB
-         for(int i=0;i<checks.length;i++){
-        	 dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
-         }
-    }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);

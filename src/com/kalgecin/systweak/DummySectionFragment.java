@@ -24,9 +24,11 @@ public class DummySectionFragment extends Fragment {
 	static List<Switch> allSwitches = new ArrayList<Switch>();
 	Context context;
 	public Activity activity;
+	private SwitchManager swm;
     public DummySectionFragment(Context c,Activity act) {
     	context = c;
     	activity = act;
+    	swm = new SwitchManager(context);
     }
 
     public static final String ARG_SECTION_NUMBER = "section_number";
@@ -40,7 +42,15 @@ public class DummySectionFragment extends Fragment {
     	switch (args.getInt(ARG_SECTION_NUMBER)){
     		case 1: 
     			rlMain = inflater.inflate(R.layout.activity_main, container,false);
+    			Button btnSetA 		= (Button) rlMain.findViewById(R.id.btnSetOnBoot);
+    	   	 	btnSetA.setOnClickListener(new View.OnClickListener() {
+    				@Override
+    				public void onClick(final View v) {
+    					SetChecks(v);	
+    				}
+    			});
     			MainActivity.setupMain(activity,rlMain);
+    			
     			return rlMain;
     		case 2: 
     			rlMain = inflater.inflate(R.layout.all, container,false); 
@@ -68,9 +78,9 @@ public class DummySectionFragment extends Fragment {
 						int i=0;
 						for(Switch swCur : allSwitches){
 							if(swCur.isChecked() && !allEnabled.get(i)){
-								SwitchManager.toggleState(allPackages.get(i), true);
+								swm.toggleState(allPackages.get(i), true);
 							}else if(!swCur.isChecked() && allEnabled.get(i)){
-								SwitchManager.toggleState(allPackages.get(i), false);
+								swm.toggleState(allPackages.get(i), false);
 							}
 							i++;
 						}
@@ -80,6 +90,38 @@ public class DummySectionFragment extends Fragment {
     	}
         return rlMain;
     }
+    public void SetChecks(View v){
+   	 String fTag = "sysTweak_setChecks";
+   	 String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
+   	 Switch[] CBchecks = MainActivity.CBchecks;
+     settingsDB dataSrc = new settingsDB(context);
+     dataSrc.open();
+   	 for(int i=0;i<checks.length;i++){
+   		 if(CBchecks[i].isChecked()){
+   			 if(!swm.checkState(CHKnames[i])){
+       			 Log.i(fTag,"enabling "+CHKnames[i]);
+       			 swm.toggleState(CHKnames[i], true);
+   			 }else{
+   				 Log.i(fTag,CHKnames[i]+" is already enabled");
+   				 continue;
+   			 }
+   		 }else{
+   			 if(swm.checkState(CHKnames[i])){
+       			 Log.i(fTag,"disabling "+CHKnames[i]);
+       			 swm.toggleState(CHKnames[i], false);
+   			 }else{
+   				 Log.i(fTag,CHKnames[i]+" is already disabled");
+   				 continue;
+   			 }
+   		 }
+   	 }
+   	 
+        //Save current state of checks to DB
+        for(int i=0;i<checks.length;i++){
+        	dataSrc.addSetting(checks[i], Boolean.toString(CBchecks[i].isChecked()));
+        }
+        dataSrc.close();
+   }
     public List<String> getAllPackages(){
     	List<String> out = new ArrayList<String>();
     	final PackageManager pm = context.getPackageManager();
