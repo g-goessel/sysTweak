@@ -1,5 +1,10 @@
 <resources>
-
+	<string name="title_section1">Oftes brugt</string>
+	<string name="title_section2">Alle</string>
+	<!-- Strings for 'all' section -->
+	<string name="all_apps">Alle installerede Apps</string>
+	<string name="ok">OK</string>
+	<!-- end -->
     <string name="app_name">SysTweak</string>
     <string name="hello_world">Tag ved øje:\n
         Disse indstillinger er designet til Samsung \n
@@ -33,4 +38,11 @@
 	<string name="about_graphics">Design, Tak til: </string>
 	<string name="about_translations">Oversættelser, Tak til:</string>
 	<string name="about_about">Om:</string>
+	<string name="about_translations_thanks">\n
+	    French - Minidou-77\n
+	    Português - Ghelfalath\n
+	    Arabic - Kadhim7\n
+	    Italian - ginlik1996\n
+	    Danish - JosseX\n
+	    Polish - dedopl\n</string>
 </resources>

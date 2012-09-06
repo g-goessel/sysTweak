@@ -1,0 +1,46 @@
+<resources>
+<string name="title_section1">Generale</string>
+<string name="title_section2">Toate</string>
+<!-- Strings for 'all' section -->
+<string name="all_apps">Toate aplicatiile instalate</string>
+<string name="ok">OK</string>
+<!-- end -->
+<string name="app_name">SysTweak</string>
+<string name="hello_world">ATENTIE:\nAceste setari sunt pentru Galaxy S2 i9100, versiunea internationala.
+S-ar putea sa nu mearga pe alte device-uri. Activeaza serviciile pe care vrei sa le rulezi\n</string>
+<string name="menu_settings">Setari</string>
+<string name="menu_about">Info</string>
+<string name="title_activity_main">Tweak-uri de Sistem </string>
+<!-- Things to toggle -->
+<string name="RomManager">Rom Manager</string>
+<string name="LiveWallpapers">Wallpaper-uri Live</string>
+<string name="CMWallpapers">Wallpaper-uri CyanogenMod</string>
+<string name="GoogleTextToSpeech">Google Text-to-Speech</string>
+<string name="gmail">Gmail</string>
+<string name="TVOut">TV Out</string>
+<string name="phone">Telefon</string>
+<string name="apollo">Apollo</string>
+<string name="DSPManager">DSP Manager</string>
+<string name="email">Email</string>
+<string name="news_and_weather">Stiri si Vreme</string>
+<string name="Movie_Studio">Editor Video</string>
+<string name="google_talk">Google Talk</string>
+<string name="terminal_emulator">Emulator Terminal</string>
+<string name="torch">Torch</string>
+<string name="media_scanner">Scanner Media</string>
+<!-- Not yet added -->
+<!-- end -->
+<string name="boot">Set on Boot</string>
+<string name="apply">Aplica Setarile</string>
+<string name="about_graphics">Grafica facuta de: </string>
+<string name="about_translations">Traducerile facute de:</string>
+<string name="about_about">Info:</string>
+<string name="about_translations_thanks">\n
+French - Minidou-77\n
+Portugues - Ghelfalath\n
+Arabic - Kadhim7\n
+Italian - ginlik1996\n
+Romana - MamaDraq\n
+Danish - JosseX\n
+Polish - dedopl\n</string>
+</resources> 

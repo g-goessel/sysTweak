@@ -67,6 +67,7 @@ public final class R {
  Things to toggle 
  Things to toggle 
  Things to toggle 
+ Things to toggle 
          */
         public static final int RomManager=0x7f040009;
         public static final int TVOut=0x7f04000e;
@@ -77,16 +78,22 @@ public final class R {
         /**  Strings for 'all' section 
  Strings for 'all' section 
  Strings for 'all' section 
+ Strings for 'all' section 
+ Strings for 'all' section 
          */
         public static final int all_apps=0x7f040002;
         public static final int apollo=0x7f040010;
         /**  end 
  end 
  end 
+ end 
+ end 
          */
         public static final int app_name=0x7f040004;
         public static final int apply=0x7f04001a;
         /**  Not yet added 
+ end 
+ Not yet added 
  end 
  Not yet added 
  end 
