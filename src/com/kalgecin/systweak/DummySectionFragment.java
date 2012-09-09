@@ -83,8 +83,10 @@ public class DummySectionFragment extends Fragment {
 						for(Switch swCur : allSwitches){
 							if(swCur.isChecked() && !allEnabled.get(i)){
 								swm.toggleState(allPackages.get(i), true);
+								swm.syncSwitch(allPackages.get(i), true);
 							}else if(!swCur.isChecked() && allEnabled.get(i)){
 								swm.toggleState(allPackages.get(i), false);
+								swm.syncSwitch(allPackages.get(i), false);
 							}
 							i++;
 						}
