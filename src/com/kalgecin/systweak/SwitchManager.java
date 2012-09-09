@@ -49,6 +49,20 @@ public class SwitchManager extends Activity{
 		return pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		
 	}
+	public void syncSwitch(String name,boolean state){
+		String tag = "sysTweak_SMsyncSwitch";
+		int a = DummySectionFragment.allPackages.lastIndexOf(name);
+		Log.i(tag,"name: "+name+" state: "+state+" a: "+a);
+		if(a>-1)
+			DummySectionFragment.allSwitches.get(a).setChecked(state);
+		
+		for(int i=0;i<MainActivity.CHKnames.length;i++){
+			if(MainActivity.CHKnames[i].contains(name)){
+				MainActivity.CBchecks[i].setChecked(state);
+				Log.i(tag,"name: "+MainActivity.CHKnames[i]+" state: "+state+" i: "+i);
+			}
+		}
+	}
 	public void toggleState(String packageName, boolean state){
 		String tag = "sysTweak_SMtoggleState";
 		Log.i(tag,"Toggle "+ packageName+" to "+state);

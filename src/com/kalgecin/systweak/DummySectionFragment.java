@@ -94,11 +94,13 @@ public class DummySectionFragment extends Fragment {
     	}
         return rlMain;
     }
+    
     public void SetChecks(View v){
    	 String fTag = "sysTweak_setChecks";
    	 String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
    	 Switch[] CBchecks = MainActivity.CBchecks;
      settingsDB dataSrc = new settingsDB(context);
+     
      dataSrc.open();
    	 for(int i=0;i<checks.length;i++){
    		 if(CBchecks[i].isChecked()){
@@ -106,6 +108,7 @@ public class DummySectionFragment extends Fragment {
    				 if(CBchecks[i].isEnabled()){
 	       			 Log.i(fTag,"enabling "+CHKnames[i]);
 	       			 swm.toggleState(CHKnames[i], true);
+	       			 swm.syncSwitch(CHKnames[i], true);
    				 }else{
    					Log.i(fTag,CHKnames[i]+"is not installed");
    				 }
@@ -115,11 +118,12 @@ public class DummySectionFragment extends Fragment {
    			 }
    		 }else{
    			 if(swm.checkState(CHKnames[i])){
-   				if(!CBchecks[i].isEnabled()){
+   				if(CBchecks[i].isEnabled()){
 	       			 Log.i(fTag,"disabling "+CHKnames[i]);
 	       			 swm.toggleState(CHKnames[i], false);
+	       			 swm.syncSwitch(CHKnames[i], false);
    				}else{
-   					Log.i(fTag,CHKnames[i]+"is not installed");
+   					Log.i(fTag,CHKnames[i]+" is not installed");
    				}
    			 }else{
    				 Log.i(fTag,CHKnames[i]+" is already disabled");
