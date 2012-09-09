@@ -16,7 +16,11 @@ public class settingsDB {
 	}
 	
 	public void open() throws SQLException{
-		database = dbHelper.getWritableDatabase();
+		try{
+			database = dbHelper.getWritableDatabase();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
 	}
 	
 	public void close() {
