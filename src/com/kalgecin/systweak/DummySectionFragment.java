@@ -197,15 +197,26 @@ public class DummySectionFragment extends Fragment {
 		dataSrc.close();
     }
     public List<String> getAllPackages(){
+    	boolean tmp = false;
     	List<String> out = new ArrayList<String>();
     	final PackageManager pm = context.getPackageManager();
     	List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
     	allNames.clear();
     	allEnabled.clear();
     	for(ApplicationInfo packageInfo : packages){
-    		out.add(packageInfo.packageName);
-    		allNames.add(pm.getApplicationLabel(packageInfo).toString());
-    		allEnabled.add(packageInfo.enabled);
+    		for(int i=0;i<MainActivity.CBAllBlackList.length;i++){
+    			if(MainActivity.CBAllBlackList[i].contains(packageInfo.packageName)){
+    				tmp=true;
+    				break;
+    			}
+    		}
+    		if(!tmp){
+	    		out.add(packageInfo.packageName);
+	    		allNames.add(pm.getApplicationLabel(packageInfo).toString());
+	    		allEnabled.add(packageInfo.enabled);
+    		}else{
+    			tmp=false;
+    		}
     	}
     	return out;
     }

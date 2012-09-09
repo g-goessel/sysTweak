@@ -42,6 +42,8 @@ public class MainActivity extends FragmentActivity {
 	static int[] CBchecksID = {R.id.swRomManager,R.id.swLiveWallpapers,R.id.swCMWallpapers,R.id.swGTTS,R.id.swMovieStudio,
 						R.id.swGmail,R.id.swTvOut,R.id.swPhone,R.id.swApollo,R.id.swDSPManager,R.id.swEmail,R.id.swNewsAndWeather,
 						R.id.swGTalk,R.id.swTerminalEmulator,R.id.swTorch,R.id.swMediaScanner};
+	static String[] CBAllBlackList = {"com.android.settings","package:com.android.backupconfirm","package:com.android.certinstaller",
+						"package:com.android.defcontainer","package:com.android.packageinstaller"};
 	static List<String> allPackages = new ArrayList<String>();
 	static List<Boolean> allEnabled = new ArrayList<Boolean>();
 	static List<String> allNames = new ArrayList<String>();
