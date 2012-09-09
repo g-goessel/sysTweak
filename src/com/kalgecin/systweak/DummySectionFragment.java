@@ -149,6 +149,7 @@ public class DummySectionFragment extends Fragment {
     	alert.show();
     }
     public void loadChecks(View v){
+    	String tag = "sysTweaks_loadChecks";
     	String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
     	Switch[] CBchecks = MainActivity.CBchecks;
     	int[] CBchecksID = MainActivity.CBchecksID;
@@ -157,9 +158,10 @@ public class DummySectionFragment extends Fragment {
         dataSrc.open();
         
     	for(int i=0;i<checks.length;i++){
+    		Log.i(tag, "i: "+i+" : "+checks[i]);
     		CBchecks[i] = (Switch) v.findViewById(CBchecksID[i]);
          }
-    	String tag = "sysTweaks_loadChecks";
+    	
     	boolean[] btr = new boolean[CHKnames.length];
     	SwitchManager swm = new SwitchManager(context);
     	for(int i=0;i<CHKnames.length;i++){
