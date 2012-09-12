@@ -9,6 +9,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -22,11 +24,13 @@ import android.widget.Switch;
 public class DummySectionFragment extends Fragment {
 	static List<String> allPackages = new ArrayList<String>();
 	static List<Boolean> allEnabled = new ArrayList<Boolean>();
+	static List<Boolean> allAdv = new ArrayList<Boolean>();
 	static List<String> allNames = new ArrayList<String>();
 	static List<Switch> allSwitches = new ArrayList<Switch>();
 	Context context;
 	public Activity activity;
 	private SwitchManager swm;
+	private boolean showadv = false;
     public static final String ARG_SECTION_NUMBER = "section_number";
     
     public DummySectionFragment() {
@@ -70,6 +74,9 @@ public class DummySectionFragment extends Fragment {
     					allSwitches.add(new Switch(getActivity()));
     				}
 					allSwitches.get(i).setText(allNames.get(i));
+					if(allAdv.get(i) && showadv){
+						allSwitches.get(i).setTextColor(Color.RED);
+					}
 					allSwitches.get(i).setChecked(allEnabled.get(i));
 					rlAll.addView(allSwitches.get(i));
 					
@@ -205,6 +212,9 @@ public class DummySectionFragment extends Fragment {
 		dataSrc.close();
     }
     public List<String> getAllPackages(){
+    	settingsDB dataSrc = new settingsDB(context);
+        dataSrc.open();
+    	showadv = Boolean.parseBoolean(dataSrc.getSetting("showadv"));
     	boolean tmp = false;
     	List<String> out = new ArrayList<String>();
     	final PackageManager pm = context.getPackageManager();
@@ -218,14 +228,15 @@ public class DummySectionFragment extends Fragment {
     				break;
     			}
     		}
-    		if(!tmp){
+    		if(!tmp || showadv){
 	    		out.add(packageInfo.packageName);
 	    		allNames.add(pm.getApplicationLabel(packageInfo).toString());
 	    		allEnabled.add(packageInfo.enabled);
-    		}else{
-    			tmp=false;
     		}
+    		allAdv.add(tmp);
+    		tmp=false;
     	}
+    	dataSrc.close();
     	return out;
     }
 }
