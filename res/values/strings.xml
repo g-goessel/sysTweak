@@ -32,6 +32,7 @@
 	<!-- end -->
 	<string name="boot">Set on Boot</string>
 	<string name="apply">Apply Settings</string>
+	<string name="showadv">Show Dangerous settings</string>
 	<string name="about_graphics">Graphics thanks to: </string>
 	<string name="about_translations">Translations thanks to:</string>
 	<string name="about_about">About:</string>

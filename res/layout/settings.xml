@@ -5,5 +5,6 @@
     android:orientation="vertical" >
     
 <CheckBox android:id="@+id/chkSettings_onboot" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/boot" />
+<CheckBox android:id="@+id/chkShowAdv" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/showadv" />
 <Button android:id="@+id/btnSettingsSave" android:layout_height="wrap_content" android:layout_width="fill_parent" android:text="@string/apply" />
 </LinearLayout>
