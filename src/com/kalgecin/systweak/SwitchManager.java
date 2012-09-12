@@ -17,11 +17,16 @@ public class SwitchManager extends Activity{
 		context = c;
 		pm = context.getPackageManager();
 	}
+	/**
+	 * Check to see if packageName exists
+	 * @param packageName name of package to check
+	 * @return true if the package exists false if otherwise
+	 */
 	public boolean checkExists(String packageName){
 		if(packageName.contains("/")){
 			packageName = packageName.substring(0, packageName.indexOf("/"));
-			Log.i("sysTweak_SMcheckExists",packageName);
 		}
+		Log.i("sysTweak_SMcheckExists",packageName);
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		for(ApplicationInfo packageInfo : packages){
 			if(packageInfo.packageName.equalsIgnoreCase(packageName)){
@@ -30,6 +35,11 @@ public class SwitchManager extends Activity{
 		}
 		return false;
 	}
+	/**
+	 * Check if packageName is enabled on system 
+	 * @param packageName package name to be checked
+	 * @return true if packageName is enabled, false otherwise
+	 */
 	public boolean checkState(String packageName){
 		List<ApplicationInfo> packages = pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		for(ApplicationInfo packageInfo : packages){
@@ -43,12 +53,21 @@ public class SwitchManager extends Activity{
 		}
 		return false;
 	}
+	/**
+	 * get all packages installed on system
+	 * @return list of all packages
+	 */
 	public List<ApplicationInfo> getAllPackages(){
 		pm = getPackageManager();
 		
 		return pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		
 	}
+	/**
+	 * sync the status of a switch between COMMON and ALL sections
+	 * @param name	packageName of the switch
+	 * @param state true for on, false for off
+	 */
 	public void syncSwitch(String name,boolean state){
 		String tag = "sysTweak_SMsyncSwitch";
 		int a = DummySectionFragment.allPackages.lastIndexOf(name);
@@ -67,6 +86,11 @@ public class SwitchManager extends Activity{
 			}
 		}
 	}
+	/**
+	 * toggle the state of the switch
+	 * @param packageName name of the package to toggle
+	 * @param state true for enabled, false otherwise
+	 */
 	public void toggleState(String packageName, boolean state){
 		String tag = "sysTweak_SMtoggleState";
 		Log.i(tag,"Toggle "+ packageName+" to "+state);

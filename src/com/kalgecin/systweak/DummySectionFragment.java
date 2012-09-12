@@ -1,7 +1,9 @@
 package com.kalgecin.systweak;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +29,11 @@ public class DummySectionFragment extends Fragment {
 	static List<Boolean> allAdv = new ArrayList<Boolean>();
 	static List<String> allNames = new ArrayList<String>();
 	static List<Switch> allSwitches = new ArrayList<Switch>();
+	static Map<String,String> allPackagesNames = new HashMap<String,String>();
+	static Map<String,Switch> allPackagesSwitches = new HashMap<String,Switch>();
+	static Map<String,Boolean> allPackagesEnabled = new HashMap<String,Boolean>();
+	static Map<String,Boolean> allPackagesAdv = new HashMap<String,Boolean>();
+	
 	Context context;
 	public Activity activity;
 	private SwitchManager swm;
@@ -54,7 +61,7 @@ public class DummySectionFragment extends Fragment {
     	   	 	btnSetA.setOnClickListener(new View.OnClickListener() {
     				@Override
     				public void onClick(final View v) {
-    					SetChecks(v);	
+    					SetChecks();	
     				}
     			});
     			setupMain(rlMain);
@@ -99,12 +106,15 @@ public class DummySectionFragment extends Fragment {
 						}
 					}
 				});
+    			mapAll();
     			return rlMain;
     	}
         return rlMain;
     }
-    
-    public void SetChecks(View v){
+    /**
+     * enable/disable and set switches
+     */
+    public void SetChecks(){
    	 String fTag = "sysTweak_setChecks";
    	 String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
    	 Switch[] CBchecks = MainActivity.CBchecks;
@@ -147,6 +157,10 @@ public class DummySectionFragment extends Fragment {
         }
         dataSrc.close();
    }
+    /**
+     * Shows the notice popup
+     * @param vi view to be used to show the popup
+     */
     public void setupMain(View vi){
     	AlertDialog.Builder builder = new AlertDialog.Builder(vi.getContext());
         builder.setMessage(R.string.hello_world)
@@ -161,6 +175,10 @@ public class DummySectionFragment extends Fragment {
     	AlertDialog alert = builder.create();
     	alert.show();
     }
+    /**
+     * Load checkboxes with their values from database. for COMMON section
+     * @param v view to be used in loading the checkboxes to
+     */
     public void loadChecks(View v){
     	String tag = "sysTweaks_loadChecks";
     	String[] checks = MainActivity.checks,CHKnames = MainActivity.CHKnames;
@@ -211,6 +229,24 @@ public class DummySectionFragment extends Fragment {
 		}
 		dataSrc.close();
     }
+    /**
+     * creates a map of allNames,allSwitches,allEnabled,allAdv with key from allPackages
+     * for easier access to the elements
+     */
+    private void mapAll(){
+    	int i = 0;
+    	for(String packageName : allPackages){
+    		allPackagesNames.put(packageName, allNames.get(i));
+    		allPackagesSwitches.put(packageName, allSwitches.get(i));
+    		allPackagesEnabled.put(packageName, allEnabled.get(i));
+    		allPackagesAdv.put(packageName, allAdv.get(i));
+    		i++;
+    	}
+    }
+    /**
+     * returns list of all packages installed
+     * @return List<String> of all installed packages
+     */
     public List<String> getAllPackages(){
     	settingsDB dataSrc = new settingsDB(context);
         dataSrc.open();
