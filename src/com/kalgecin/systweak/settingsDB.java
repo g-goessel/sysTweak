@@ -9,7 +9,7 @@ import android.util.Log;
 
 public class settingsDB {
 	private SQLiteDatabase database;
-	private dbHelped dbHelper;
+	private dbHelped dbHelper = null;
 	private String[] collumns = {dbHelped.dbIdCol,dbHelped.dbColSetting,dbHelped.dbColValue};
 	public settingsDB(Context context){
 		dbHelper = new dbHelped(context);

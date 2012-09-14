@@ -79,7 +79,7 @@ public class SwitchManager extends Activity{
 			if(MainActivity.CHKnames[i].contains(name)){
 				MainActivity.CBchecks[i].setChecked(state);
 				Log.i(tag,"name: "+MainActivity.CHKnames[i]+" state: "+state+" i: "+i);
-				settingsDB datasrc = new settingsDB(this);
+				settingsDB datasrc = new settingsDB(context);
 				datasrc.open();
 				datasrc.addSetting(name, Boolean.toString(state));
 				datasrc.close();
