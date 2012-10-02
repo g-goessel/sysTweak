@@ -17,13 +17,14 @@ public final class R {
     public static final class id {
         public static final int btnAllApply=0x7f070014;
         public static final int btnSetOnBoot=0x7f070001;
+        public static final int btnSettingsEnableAll=0x7f07001c;
         public static final int btnSettingsSave=0x7f07001b;
         public static final int chkSettings_onboot=0x7f070019;
         public static final int chkShowAdv=0x7f07001a;
         public static final int lblNote=0x7f070000;
         public static final int lyContents=0x7f070003;
-        public static final int menu_about=0x7f07001d;
-        public static final int menu_settings=0x7f07001c;
+        public static final int menu_about=0x7f07001e;
+        public static final int menu_settings=0x7f07001d;
         public static final int pager=0x7f070017;
         public static final int pager_title_strip=0x7f070018;
         public static final int rlAll=0x7f070016;
@@ -72,10 +73,10 @@ public final class R {
          */
         public static final int RomManager=0x7f040009;
         public static final int TVOut=0x7f04000e;
-        public static final int about_about=0x7f04001e;
-        public static final int about_graphics=0x7f04001c;
-        public static final int about_translations=0x7f04001d;
-        public static final int about_translations_thanks=0x7f04001f;
+        public static final int about_about=0x7f04001f;
+        public static final int about_graphics=0x7f04001d;
+        public static final int about_translations=0x7f04001e;
+        public static final int about_translations_thanks=0x7f040020;
         /**  Strings for 'all' section 
  Strings for 'all' section 
  Strings for 'all' section 
@@ -118,6 +119,7 @@ public final class R {
         public static final int news_and_weather=0x7f040013;
         public static final int ok=0x7f040003;
         public static final int phone=0x7f04000f;
+        public static final int settings_enable_all=0x7f04001c;
         public static final int showadv=0x7f04001b;
         public static final int terminal_emulator=0x7f040016;
         public static final int title_activity_main=0x7f040008;
