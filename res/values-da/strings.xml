@@ -35,6 +35,8 @@
 	<!-- end -->
 	<string name="boot">Sæt til Opstart</string>
 	<string name="apply">Anvend Indstillinger</string>
+	<string name="showadv">Vis farlige indstillinger</string>
+	<string name="settings_enable_all">Slå alt til</string>
 	<string name="about_graphics">Design, Tak til: </string>
 	<string name="about_translations">Oversættelser, Tak til:</string>
 	<string name="about_about">Om:</string>
@@ -44,5 +46,7 @@
 	    Arabic - Kadhim7\n
 	    Italian - ginlik1996\n
 	    Danish - JosseX\n
-	    Polish - dedopl\n</string>
+	    Polish - dedopl\n
+	    Romana - mamadraq\n
+	    German - KcDaRookie\n</string>
 </resources>
