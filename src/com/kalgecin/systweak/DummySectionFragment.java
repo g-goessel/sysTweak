@@ -185,7 +185,7 @@ public class DummySectionFragment extends Fragment {
     	Switch[] CBchecks = MainActivity.CBchecks;
     	int[] CBchecksID = MainActivity.CBchecksID;
     	Boolean[] CBStatuses = MainActivity.CBStatuses;
-    	settingsDB dataSrc = new settingsDB(context);
+    	settingsDB dataSrc = new settingsDB(v.getContext());
         dataSrc.open();
         
     	for(int i=0;i<checks.length;i++){

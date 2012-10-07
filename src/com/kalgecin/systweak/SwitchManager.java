@@ -58,7 +58,7 @@ public class SwitchManager extends Activity{
 	 * @return list of all packages
 	 */
 	public List<ApplicationInfo> getAllPackages(){
-		pm = getPackageManager();
+		pm = context.getPackageManager();
 		
 		return pm.getInstalledApplications(PackageManager.GET_META_DATA);
 		
