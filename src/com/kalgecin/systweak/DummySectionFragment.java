@@ -92,17 +92,27 @@ public class DummySectionFragment extends Fragment {
     			btnSet.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						allPackages = getAllPackages();
-						int i=0;
-						for(Switch swCur : allSwitches){
-							if(swCur.isChecked() && !allEnabled.get(i)){
-								swm.toggleState(allPackages.get(i), true);
-								swm.syncSwitch(allPackages.get(i), true);
-							}else if(!swCur.isChecked() && allEnabled.get(i)){
-								swm.toggleState(allPackages.get(i), false);
-								swm.syncSwitch(allPackages.get(i), false);
+						try{
+							allPackages = getAllPackages();
+							int i=0;
+							for(Switch swCur : allSwitches){
+								if(swCur.isChecked() && !allEnabled.get(i)){
+									swm.toggleState(allPackages.get(i), true);
+									swm.syncSwitch(allPackages.get(i), true);
+								}else if(!swCur.isChecked() && allEnabled.get(i)){
+									swm.toggleState(allPackages.get(i), false);
+									swm.syncSwitch(allPackages.get(i), false);
+								}
+								i++;
 							}
-							i++;
+						}catch(IndexOutOfBoundsException e){
+							/*
+							 * java.lang.IndexOutOfBoundsException: Invalid index 106, size is 106
+								at java.util.ArrayList.throwIndexOutOfBoundsException(ArrayList.java:251)
+								at java.util.ArrayList.get(ArrayList.java:304)
+								if(swCur.isChecked() && !allEnabled.get(i)){
+																    ^
+							 */
 						}
 					}
 				});
