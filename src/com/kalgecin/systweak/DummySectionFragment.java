@@ -98,12 +98,14 @@ public class DummySectionFragment extends Fragment {
 					rlAll.addView(allSwitches.get(i));
 					
     			}
+    			
     			Button btnSet = (Button) rlMain.findViewById(R.id.btnAllApply);
     			btnSet.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						try{
 							allPackages = getAllPackages();
+							sortAll();
 							int i=0;
 							for(Switch swCur : allSwitches){
 								if(swCur.isChecked() && !allEnabled.get(i)){
@@ -262,16 +264,21 @@ public class DummySectionFragment extends Fragment {
     			
     			if(allNames.get(k).compareTo(allNames.get(z)) > 0){
     				Log.i(tag,"b "+allNames.get(k)+":"+allNames.get(z));
-    				String tmp = allNames.get(k);
+    				String  tmp = allNames.get(k);
+    				String  tmpp = allPackages.get(k);
     				Boolean tmpb = allEnabled.get(k);
     				Boolean tmpa = allAdv.get(k);
+    				//Switch  tmps = allSwitches.get(k);
     				allNames.set(k, allNames.get(z));
     				allNames.set(z, tmp);
     				allEnabled.set(k,allEnabled.get(z));
     				allEnabled.set(z, tmpb);
     				allAdv.set(k, allAdv.get(z));
     				allAdv.set(z, tmpa);
-    				
+    				allPackages.set(k, allPackages.get(z));
+    				allPackages.set(z, tmpp);
+    				//allSwitches.set(k, allSwitches.get(z));
+    				//allSwitches.set(z,tmps);
     				Log.i(tag,"a "+allNames.get(k)+":"+allNames.get(z));
     			}
     			
@@ -319,6 +326,7 @@ public class DummySectionFragment extends Fragment {
     		tmp=false;
     	}
     	dataSrc.close();
+    	//sortAll();
     	return out;
     }
 }

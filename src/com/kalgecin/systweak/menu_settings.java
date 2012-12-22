@@ -53,7 +53,8 @@ public class menu_settings extends MainActivity{
 		SwitchManager sm = new SwitchManager(this);
 		List<ApplicationInfo> allApps= sm.getAllPackages();
 		for(ApplicationInfo appInfo : allApps){
-			sm.toggleState(appInfo.packageName, true);
+			if(appInfo.packageName.compareTo("com.kalgecin.systweak") != 0)
+				sm.toggleState(appInfo.packageName, true);
 		}
 	}
 }
