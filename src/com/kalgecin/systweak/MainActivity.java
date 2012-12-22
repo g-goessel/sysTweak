@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -103,10 +104,11 @@ public class MainActivity extends FragmentActivity {
         public Fragment getItem(int i) {
             Fragment fragment = new DummySectionFragment();
             Context c = getApplicationContext();
-            if(c != null)
+            try{
             	((DummySectionFragment) fragment).setUP(c,activity);
-            else{
-            	// TODO: WILL CAUSE NULL EXCEPTION in switch manager
+            }catch(NullPointerException e){
+            	Log.i("sysTweak_main",e.getMessage());
+            	System.exit(0); //TODO: restart app instead
             }
            // ((DummySectionFragment) fragment).setUP(getApplicationContext(),activity);
             Bundle args = new Bundle();

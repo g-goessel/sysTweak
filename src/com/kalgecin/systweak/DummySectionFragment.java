@@ -44,10 +44,15 @@ public class DummySectionFragment extends Fragment {
     
     public DummySectionFragment() {
     }
-    public void setUP(Context c,Activity act){
+    public void setUP(Context c,Activity act) throws NullPointerException{
     	context = c;
     	activity = act;
-    	swm = new SwitchManager(context);
+    	try{
+    		swm = new SwitchManager(context);
+    	}catch(NullPointerException e){
+    		Log.i("sysTweak_DSM_setUP", e.getMessage());
+    		throw new NullPointerException(e.getMessage());
+    	}
     }
 
     @Override

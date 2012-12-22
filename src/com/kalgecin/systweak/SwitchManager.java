@@ -13,7 +13,10 @@ import android.util.Log;
 public class SwitchManager extends Activity{
 	static PackageManager pm;
 	Context context;
-	public SwitchManager(Context c) {
+	public SwitchManager(Context c) throws NullPointerException{
+		if(c == null){
+			throw new NullPointerException("NullContext");
+		}
 		context = c;
 		pm = context.getPackageManager();
 	}
