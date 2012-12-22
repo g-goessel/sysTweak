@@ -5,6 +5,7 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -101,7 +102,13 @@ public class MainActivity extends FragmentActivity {
         @Override
         public Fragment getItem(int i) {
             Fragment fragment = new DummySectionFragment();
-            ((DummySectionFragment) fragment).setUP(getApplicationContext(),activity);
+            Context c = getApplicationContext();
+            if(c != null)
+            	((DummySectionFragment) fragment).setUP(c,activity);
+            else{
+            	// TODO: WILL CAUSE NULL EXCEPTION in switch manager
+            }
+           // ((DummySectionFragment) fragment).setUP(getApplicationContext(),activity);
             Bundle args = new Bundle();
             args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, i + 1);
             fragment.setArguments(args);

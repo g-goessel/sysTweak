@@ -2,8 +2,10 @@ package com.kalgecin.systweak;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -69,11 +71,12 @@ public class DummySectionFragment extends Fragment {
     			return rlMain;
     		case 2: 
     			rlMain = inflater.inflate(R.layout.all, container,false); 
-    			
+    			Boolean c = true;
     			LinearLayout rlAll = (LinearLayout) rlMain.findViewById(R.id.rlAll);
     			//ScrollView rlSV = (ScrollView) rlMain.findViewById(R.id.rlAllSV);
     			//((ViewGroup)rlSV.getParent()).removeView(rlSV);
     			allPackages = getAllPackages();
+    			sortAll();
     			for(int i=0;i<allPackages.size();i++){
     				if(allSwitches.size()>i){
     					allSwitches.set(i,new Switch(getActivity()));
@@ -85,6 +88,13 @@ public class DummySectionFragment extends Fragment {
 						allSwitches.get(i).setTextColor(Color.RED);
 					}
 					allSwitches.get(i).setChecked(allEnabled.get(i));
+					if(c){
+						allSwitches.get(i).setBackgroundColor(Color.rgb(20, 20, 20));
+						c = false;
+					}else{
+						allSwitches.get(i).setBackgroundColor(Color.rgb(00, 00, 00));
+						c = true;
+					}
 					rlAll.addView(allSwitches.get(i));
 					
     			}
@@ -243,8 +253,34 @@ public class DummySectionFragment extends Fragment {
      * creates a map of allNames,allSwitches,allEnabled,allAdv with key from allPackages
      * for easier access to the elements
      */
+    private void sortAll(){
+    	String tag = "sortAll";
+
+    	Log.i(tag,"size: "+allNames.size());
+    	for(int k=0;k<allNames.size()-1;k++){
+    		for(int z=k+1;z<allNames.size();z++){
+    			
+    			if(allNames.get(k).compareTo(allNames.get(z)) > 0){
+    				Log.i(tag,"b "+allNames.get(k)+":"+allNames.get(z));
+    				String tmp = allNames.get(k);
+    				Boolean tmpb = allEnabled.get(k);
+    				Boolean tmpa = allAdv.get(k);
+    				allNames.set(k, allNames.get(z));
+    				allNames.set(z, tmp);
+    				allEnabled.set(k,allEnabled.get(z));
+    				allEnabled.set(z, tmpb);
+    				allAdv.set(k, allAdv.get(z));
+    				allAdv.set(z, tmpa);
+    				
+    				Log.i(tag,"a "+allNames.get(k)+":"+allNames.get(z));
+    			}
+    			
+    		}
+    	}
+    }
     private void mapAll(){
     	int i = 0;
+    	
     	for(String packageName : allPackages){
     		allPackagesNames.put(packageName, allNames.get(i));
     		allPackagesSwitches.put(packageName, allSwitches.get(i));
