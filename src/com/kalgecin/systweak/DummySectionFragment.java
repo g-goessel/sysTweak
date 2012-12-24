@@ -157,6 +157,7 @@ public class DummySectionFragment extends Fragment {
 	       			 swm.syncSwitch(CHKnames[i], true);
    				 }else{
    					Log.i(fTag,CHKnames[i]+"is not installed");
+   					continue;
    				 }
    			 }else{
    				 Log.i(fTag,CHKnames[i]+" is already enabled");
@@ -170,6 +171,7 @@ public class DummySectionFragment extends Fragment {
 	       			 swm.syncSwitch(CHKnames[i], false);
    				}else{
    					Log.i(fTag,CHKnames[i]+" is not installed");
+   					continue;
    				}
    			 }else{
    				 Log.i(fTag,CHKnames[i]+" is already disabled");
@@ -233,12 +235,12 @@ public class DummySectionFragment extends Fragment {
     		if(btr[i]){
     			CBchecks[i].setEnabled(true);
     			Log.i(tag,"enabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
-    			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("true")){
-        			b=true;
-        			Log.i(tag,"on");
-        		}else{
+    			if(dataSrc.getSetting(checks[i]).equalsIgnoreCase("false")){
         			b=false;
         			Log.i(tag,"off");
+        		}else{
+        			b=true;
+        			Log.i(tag,"on");
         		}
         		Log.i(tag, checks[i]+","+i+","+Boolean.toString(b));
         		

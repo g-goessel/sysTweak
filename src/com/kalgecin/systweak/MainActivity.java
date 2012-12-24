@@ -104,6 +104,10 @@ public class MainActivity extends FragmentActivity {
         public Fragment getItem(int i) {
             Fragment fragment = new DummySectionFragment();
             Context c = getApplicationContext();
+            if(c==null){
+            	Log.i("systWeak_loadDummy", "null context");
+            	System.exit(0);
+            }
             try{
             	((DummySectionFragment) fragment).setUP(c,activity);
             }catch(NullPointerException e){
