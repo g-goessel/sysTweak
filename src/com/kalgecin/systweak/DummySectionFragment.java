@@ -15,6 +15,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -248,6 +249,7 @@ public class DummySectionFragment extends Fragment {
         		CBStatuses[i]=b;
     		}else{
 				CBchecks[i].setEnabled(false);
+				CBchecks[i].setVisibility(View.GONE);
     			Log.i(tag,"disabled "+checks[i]+" ->"+CBchecks[i].isEnabled());
     		}
     		
