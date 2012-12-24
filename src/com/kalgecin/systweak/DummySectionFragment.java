@@ -72,7 +72,7 @@ public class DummySectionFragment extends Fragment {
     					SetChecks();	
     				}
     			});
-    			setupMain(rlMain);
+    			//setupMain(rlMain);
     			loadChecks(rlMain);
     			return rlMain;
     		case 2: 
