@@ -15,9 +15,13 @@ public class SwitchManager extends Activity{
 	Context context;
 	public SwitchManager(Context c) throws NullPointerException{
 		if(c == null){
-			throw new NullPointerException("NullContext");
+			context = MainActivity.activity;
+			Log.i("sysTweak_SwitchManager","null context on constructor");
+			//throw new NullPointerException("NullContext");
+		}else{
+			context = c;
 		}
-		context = c;
+		
 		pm = context.getPackageManager();
 	}
 	/**
