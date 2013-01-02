@@ -2,17 +2,23 @@ package com.kalgecin.systweak;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 public class settingsDB {
-	private SQLiteDatabase database;
+	private SQLiteDatabase database = null;
 	private dbHelped dbHelper = null;
 	private String[] collumns = {dbHelped.dbIdCol,dbHelped.dbColSetting,dbHelped.dbColValue};
 	public settingsDB(Context context){
-		dbHelper = new dbHelped(context);
+		if(context != null)
+			dbHelper = new dbHelped(context);
+		else{
+			Log.i("sysTweak_settingsDB","null context");
+			dbHelper = new dbHelped(MainActivity.activity);
+		}
 	}
 	
 	public void open() throws SQLException{
@@ -27,6 +33,9 @@ public class settingsDB {
 		dbHelper.close();
 	}
 	public Boolean checkSetting(String name){
+		//TODO: very dirty fix
+		if(database == null)
+			return false;
 		Cursor c = database.rawQuery("select 1 from "+dbHelped.dbSettingsName+" where "+dbHelped.dbColSetting+"=?", new String[] {name});
 		Boolean exists = (c.getCount() > 0);
 		c.close();
